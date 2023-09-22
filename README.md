@@ -6,4 +6,12 @@ La elección de un lugar para establecer un nuevo negocio no es una decisión tr
 
 ## Configuración inicial del proyecto
 
-La configuración inicial de git y Github se describe [aquí](/doc/configuracion-inicial.md) 
+La configuración inicial de git y Github se describe [aquí](/doc/configuracion-inicial.md).
+
+## Historias de usuario
+
+Las historias de usuario se pueden consultar [aquí](/doc/user-stories/user-stories.md).
+
+## Milestones
+
+Las milestones se pueden encontrar [aquí](/doc/milestones.md).
