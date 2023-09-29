@@ -1,13 +1,23 @@
 ## Milestone 0
-* Comprension del problema y búsqueda de las mejores fuentes de datos para resolverlo.
+
+Análisis de las historias de usuario para ser capaz de crear un modelo del problema.
+
+PMV: Código modularizado del problema.
+
+Validez: Será válido cuando lo apruebe el product manager.
 
 ## Milestone 1
-* Creación del modelo de predicción estadístico.
 
-El producto será valido si dado un indicador y un número de períodos la estimación acierta en la tendencia (positiva/negativa) dentro de un margen de error estándar.
+Implementación del código necesario para detectar errores en un archivo CSV.
+
+PMV: Código fuente de las clases y métodos que implementan la lógica de negocio para detectar campos vacíos.
+
+Validez: Será válido cuando el código supere los tests correspondientes.
 
 ## Milestone 2
-* Capacidad de realizar comparaciones entre varias zonas demográficas.
 
-El producto será valido si para dos o más zonas demográficas y un indicador compara los resultados obtenidos para cada una de las zonas. La tendencia de la predicción también debe ser válida conforme a un margen de error.
+Implementación del código necesario para normalizar datos.
 
+PMV: Código fuente necesario para que sea capaz de normalizar datos.
+
+Validez: Será válido cuando el código supere los tests correspondientes.
