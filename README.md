@@ -10,7 +10,7 @@ La configuración inicial de git y Github se describe [aquí](/doc/configuracion
 
 ## Historias de usuario
 
-Las historias de usuario se pueden consultar [aquí](/doc/user-stories/user-stories.md).
+Las historias de usuario se pueden consultar [aquí](/doc/user-stories.md).
 
 ## Milestones
 
