@@ -1,6 +1,6 @@
-## Historias de Usuario
+# Historias de Usuario
 
-### HU01
+## HU01
 
 **Nombre**: María Rodríguez
 
@@ -10,7 +10,7 @@
 
 Tengo una pequeña tienda de ropa en la que vendo mis diseños. Tengo una hoja de cálculo en la que apunto las ventas de cada día, pero en ocasiones por las prisas o por un error mío, no apunto algún dato y no me doy cuenta de ello hasta que ya es demasiado tarde. Me gustaría tener una herramienta donde yo pueda dejarle el fichero CSV y que detecte si hay algún dato que no haya introducido para que pueda corregirlo y no me cause más problemas.
 
-### HU02
+## HU02
 
 **Nombre**: Juan Pérez
 

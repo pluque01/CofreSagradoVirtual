@@ -1,6 +1,9 @@
+# Milestones
+
 ## [M0] Modelo del problema
 
-Análisis de las historias de usuario para ser capaz de crear un modelo del problema.
+Análisis de las historias de usuario para ser capaz de crear un modelo del
+problema.
 
 PMV: Código modularizado del problema.
 
@@ -11,6 +14,8 @@ Validez: Será válido cuando lo apruebe el product manager.
 Implementación del código necesario para detectar errores en un archivo CSV.
 
 PMV: Código fuente de las clases y métodos que implementan la lógica de negocio para detectar campos vacíos.
+PMV: Código fuente de las clases y métodos que implementan la lógica de negocio
+para detectar errores de transcripción.
 
 Validez: Será válido cuando el código supere los test correspondientes.
 
