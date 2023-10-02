@@ -6,9 +6,15 @@
 
 **Edad**: 35 años
 
-**Profesión**: Diseñadora de moda
+**Profesión**: Diseñadora de interiores
 
-Tengo una pequeña tienda de ropa en la que vendo mis diseños. Tengo una hoja de cálculo en la que apunto las ventas de cada día, pero en ocasiones por las prisas o por un error mío, no apunto algún dato y no me doy cuenta de ello hasta que ya es demasiado tarde. Me gustaría tener una herramienta donde yo pueda dejarle el fichero CSV y que detecte si hay algún dato que no haya introducido para que pueda corregirlo y no me cause más problemas.
+Tengo un pequeño negocio de decoración y diseño de interiores. Tengo una hoja de
+cálculo en la que apunto los datos de contacto de mis clientes, pero en
+ocasiones por las prisas o por un error mío, los introduzco mal y no me doy
+cuenta de ello hasta que ya es demasiado tarde. Me gustaría tener una
+herramienta que pueda leer el fichero CSV que detecte si he escrito mal el
+nombre, apellidos o el número de teléfono de mis clientes y sea capaz de
+mostrarme sugerencias para corregirlo.
 
 ## HU02
 
@@ -18,4 +24,9 @@ Tengo una pequeña tienda de ropa en la que vendo mis diseños. Tengo una hoja d
 
 **Profesión**: Investigador
 
-En mis trabajos de investigación es imprescindible que los datos que obtengo de las muestras que analizo estén bien organizados y sean correctos. Para ello, utilizo ficheros CSV para guardarlos. Sin embargo, en ocasiones, los datos que obtengo no están en el formato correcto o me faltan algunos. Me gustaría tener una herramienta que pueda leer mi CSV y sea capaz de normalizar los datos, avisándome también si falta algún dato para que yo pueda corregirlo.
+En mis trabajos de investigación es imprescindible que los datos que obtengo de
+las muestras que analizo estén bien organizados y sean correctos. Para ello,
+utilizo ficheros CSV para guardarlos. Sin embargo, en ocasiones los datos que
+obtengo no están todos con el mismo formato. Me gustaría tener una herramienta
+que pueda leer mi CSV y sea capaz de normalizar los datos entre los que se
+encuentran números reales, enteros, fechas y cadenas de caracteres.

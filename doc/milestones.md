@@ -9,11 +9,11 @@ PMV: Código modularizado del problema.
 
 Validez: Será válido cuando lo apruebe el product manager.
 
-## [M1] Algoritmo de detección de errores
+## [M1] Algoritmo de solución de errores de transcripción
 
-Implementación del código necesario para detectar errores en un archivo CSV.
+Implementación del código necesario para solucionar errores de transcripción en
+un archivo CSV.
 
-PMV: Código fuente de las clases y métodos que implementan la lógica de negocio para detectar campos vacíos.
 PMV: Código fuente de las clases y métodos que implementan la lógica de negocio
 para detectar errores de transcripción.
 
