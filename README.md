@@ -6,12 +6,12 @@ Trabajar con ficheros CSV puede suponer una tarea tediosa y complicada. Un valor
 
 ## Configuración inicial del proyecto
 
-La configuración inicial de git y Github se describe [aquí](/doc/configuracion-inicial.md).
+La configuración inicial de git y Github se describe [aquí](doc/configuracion-inicial.md).
 
 ## Historias de usuario
 
-Las historias de usuario se pueden consultar [aquí](/doc/user-stories.md).
+Las historias de usuario se pueden consultar [aquí](doc/user-stories.md).
 
 ## Milestones
 
-Las milestones se pueden encontrar [aquí](/doc/milestones.md).
+Las milestones se pueden encontrar [aquí](doc/milestones.md).
