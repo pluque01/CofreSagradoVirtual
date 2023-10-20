@@ -1,2 +1,4 @@
 lenguaje: Go
 version: 1.15.2
+
+entidad: src/nombre.go
