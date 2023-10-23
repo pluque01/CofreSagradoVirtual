@@ -12,7 +12,7 @@ func (t *Telefono) SetTelefono(telefono string) {
 }
 
 // Función que permite obtener el telefono de la estructura Telefono
-func (t *Telefono) GetTelefono() string {
+func (t *Telefono) Telefono() string {
 	return t.telefono
 }
 
