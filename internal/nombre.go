@@ -12,7 +12,7 @@ func (n *Nombre) SetNombre(nombre string) {
 }
 
 // Función que permite obtener el nombre de la estructura Nombre
-func (n *Nombre) GetNombre() string {
+func (n *Nombre) Nombre() string {
 	return n.nombre
 }
 
