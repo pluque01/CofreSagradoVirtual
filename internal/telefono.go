@@ -15,3 +15,10 @@ func (t *Telefono) SetTelefono(telefono string) {
 func (t *Telefono) GetTelefono() string {
 	return t.telefono
 }
+
+// Función que permite crear una nueva estructura Telefono
+func NewTelefono(NuevoTelefono string) *Telefono {
+	return &Telefono{
+		telefono: NuevoTelefono,
+	}
+}
