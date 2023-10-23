@@ -12,7 +12,7 @@ func (a *Apellidos) SetApellidos(apellidos string) {
 }
 
 // Función que permite obtener el apellido de la estructura Apellidos
-func (a *Apellidos) GetApellidos() string {
+func (a *Apellidos) Apellidos() string {
 	return a.apellidos
 }
 
