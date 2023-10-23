@@ -1,22 +1,23 @@
-package nombre
+package main
 
-// Defininción de la estructura Nombre
 type Nombre struct {
-	nombre string
+	nombre    string
+	apellido1 string
+	apellido2 string
 }
 
-// Definición de los métodos de la estructura Nombre
-// Función que permite asignar un nombre a la estructura Nombre
-func (n *Nombre) SetNombre(nombre string) {
-	n.nombre = nombre
-}
-
-// Función que permite obtener el nombre de la estructura Nombre
 func (n *Nombre) Nombre() string {
 	return n.nombre
 }
 
-// Función que permite crear una nueva estructura Nombre
+func (n *Nombre) Apellido1() string {
+	return n.apellido1
+}
+
+func (n *Nombre) Apellido2() string {
+	return n.apellido2
+}
+
 func NewNombre(NuevoNombre string) *Nombre {
 	return &Nombre{
 		nombre: NuevoNombre,
