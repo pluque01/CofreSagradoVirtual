@@ -1,4 +1,4 @@
-package apellidos
+package main
 
 type Telefono struct {
 	telefono string
