@@ -9,12 +9,8 @@ func (n *Nombre) Nombre() string {
 	return n.nombre
 }
 
-func (n *Nombre) Apellido1() string {
-	return n.apellidos[0]
-}
-
-func (n *Nombre) Apellido2() string {
-	return n.apellidos[1]
+func (n *Nombre) Apellidos() [2]string {
+	return n.apellidos
 }
 
 func NewNombre(NuevoNombre string) *Nombre {
