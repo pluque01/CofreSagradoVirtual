@@ -4,10 +4,6 @@ type Telefono struct {
 	telefono string
 }
 
-func (t *Telefono) SetTelefono(telefono string) {
-	t.telefono = telefono
-}
-
 func (t *Telefono) Telefono() string {
 	return t.telefono
 }
