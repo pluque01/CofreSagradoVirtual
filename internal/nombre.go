@@ -2,8 +2,7 @@ package main
 
 type Nombre struct {
 	nombre    string
-	apellido1 string
-	apellido2 string
+	apellidos [2]string
 }
 
 func (n *Nombre) Nombre() string {
@@ -11,11 +10,11 @@ func (n *Nombre) Nombre() string {
 }
 
 func (n *Nombre) Apellido1() string {
-	return n.apellido1
+	return n.apellidos[0]
 }
 
 func (n *Nombre) Apellido2() string {
-	return n.apellido2
+	return n.apellidos[1]
 }
 
 func NewNombre(NuevoNombre string) *Nombre {
