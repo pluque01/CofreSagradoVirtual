@@ -12,12 +12,8 @@ func (c *Cliente) Telefono() string {
 func (c *Cliente) Nombre() string {
 	return c.nombre.Nombre()
 }
-func (c *Cliente) Apellido1() string {
-	return c.nombre.Apellido1()
-}
-
-func (c *Cliente) Apellido2() string {
-	return c.nombre.Apellido2()
+func (c *Cliente) Apellidos() [2]string {
+	return c.nombre.Apellidos()
 }
 
 func NewCliente(NuevoTelefono string, NuevoNombre string) *Cliente {
