@@ -4,6 +4,6 @@ import (
 	"regexp"
 )
 
-type RegistroClientera struct {
+type TipoDatosCliente struct {
 	diccionarioTipos map[string]regexp.Regexp
 }
