@@ -5,5 +5,5 @@ import (
 )
 
 type RegistroClientera struct {
-	diccionario map[string]regexp.Regexp
+	diccionarioTIpos map[string]regexp.Regexp
 }
