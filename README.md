@@ -23,3 +23,22 @@ Las historias de usuario se pueden consultar [aquí](doc/user-stories.md).
 ## Milestones
 
 Las milestones se pueden encontrar [aquí](doc/milestones.md).
+
+## Clase TipoDatosCliente
+
+Esta clase representa la entidad principal del proyecto que contendrá la lógica
+de negocio necesaria para la aplicación.
+
+### Comprobación de sintaxis
+
+Con el fin de verificar la precisión de la sintaxis en nuestra entidad y en las
+distintas clases de nuestro proyecto, se puede emplear el siguiente comando:
+
+```bash
+go run ./build/
+```
+
+## Herramientas de desarrollo
+
+Las diferentes herramientas de desarrollo utilizadas en este proyecto se pueden
+encontrar [aquí](doc/tools.md).
