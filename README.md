@@ -38,6 +38,8 @@ distintas clases de nuestro proyecto, se puede emplear el siguiente comando:
 go run ./build/
 ```
 
+Este sería el comando equivalente a `goyek check`.
+
 ## Herramientas de desarrollo
 
 Las diferentes herramientas de desarrollo utilizadas en este proyecto se pueden
