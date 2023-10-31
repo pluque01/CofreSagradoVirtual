@@ -38,3 +38,15 @@ Aunque Goyek es un proyecto relativamente nuevo, tiene más de 400 estrellas en
 GitHub y una comunidad activa de usuarios. Por tanto, es una buena opción para
 ser mi gestor de tareas.
 
+## Comprobación de sintaxis
+
+Go es un lenguaje compilado, por lo que la comprobación de sintaxis se hace en
+el momento de la compilación. Sin embargo, hay herramientas que permiten
+comprobar la sintaxis de los ficheros de Go sin necesidad de compilar el
+programa. La herramienta más popular para esta tarea es
+[golangci-lint](https://golangci-lint.run/).
+
+Sin embargo, esta herramienta también se usa para comprobar otros aspectos del
+código, actuando como *linter*. Por tanto, para la comprobación de sintaxis voy
+a usar la herramienta [gofmt](https://golang.org/cmd/gofmt/), que es la que se
+usa por defecto en Go y viene ya preinstalada.
