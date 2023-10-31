@@ -1,3 +1,6 @@
 lenguaje: Go
+entidad: internal/tipo_datos_cliente.go
+automatizar:
+  fichero: build/main.go
+  orden: "go run ./build/"
 
-entidad: internal/tipos_datos_cliente.go
