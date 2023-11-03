@@ -8,8 +8,8 @@ import (
 	"github.com/goyek/x/cmd"
 )
 
-var lint = goyek.Define(goyek.Task{
-	Name:  "lint",
+var check = goyek.Define(goyek.Task{
+	Name:  "check",
 	Usage: "gofmt -l",
 	Action: func(a *goyek.A) {
 		sb := &strings.Builder{}

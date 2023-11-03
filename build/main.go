@@ -6,6 +6,6 @@ import (
 )
 
 func main() {
-	goyek.SetDefault(lint)
+	goyek.SetDefault(check)
 	boot.Main()
 }
