@@ -35,10 +35,17 @@ Con el fin de verificar la precisión de la sintaxis en nuestra entidad y en las
 distintas clases de nuestro proyecto, se puede emplear el siguiente comando:
 
 ```bash
-go run ./build/
+go run ./build/ check
 ```
 
-Este sería el comando equivalente a `go run ./build/ check`.
+### Validación de la entidad
+
+Para comprobar la validación de la entidad, se puede emplear el siguiente
+comando que ejecuta los tests de la entidad:
+
+```bash
+go run ./build/ test
+```
 
 ## Herramientas de desarrollo
 
