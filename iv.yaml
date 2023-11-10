@@ -3,4 +3,4 @@ entidad: internal/tipo_datos_cliente.go
 automatizar:
   fichero: build/main.go
   orden: "go run ./build/"
-
+test: internal/tipo_datos_cliente.go
