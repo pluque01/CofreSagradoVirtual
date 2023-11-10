@@ -83,10 +83,10 @@ añaden funcionalidades extra. Los más populares son:
 
 ### Decisión para el proyecto
 
-Aunque las librerías mencionadas anteriormente son muy buenas, para este
-proyecto voy a intentar seguir los
-[proverbios de Go](https://go-proverbs.github.io). En este caso uno de ellos
-dice lo siguiente:
+Aunque las librerías mencionadas anteriormente son muy buenas, el criterio que
+voy a seguir para este proyecto va a ser el de las mejores prácticas para Go. En
+este caso tenemos los [proverbios de Go](https://go-proverbs.github.io). Uno de
+ellos dice lo siguiente:
 
 > A little copying is better than a little dependency.
 
@@ -94,6 +94,8 @@ Incluir un framework de tests en el proyecto es una dependencia que no es
 estrictamente necesario, ya que el módulo de tests de Go suele ser suficiente
 para la mayoría de casos, y muchas funciones como las de *assertions* se pueden
 programar manualmente.
+
+Por tanto, no voy a incluir ningún framework de tests en el proyecto.
 
 ## Herramienta para ejecutar los tests
 
