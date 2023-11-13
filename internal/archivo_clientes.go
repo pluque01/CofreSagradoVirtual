@@ -1,5 +1,5 @@
 package main
 
-type ArchivoCliente struct {
-	contenidoArchivo [][]string
+type ClientFile struct {
+	fileContent [][]string
 }
