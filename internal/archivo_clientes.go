@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"regexp"
 )
 
@@ -11,4 +12,6 @@ type ClientFile struct {
 
 type ClientTypes struct {
 	types map[string]regexp.Regexp
+}
+func readFile(filePath string, separator rune) ([][]string, error) {
 }
