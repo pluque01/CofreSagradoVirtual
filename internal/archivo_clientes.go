@@ -50,3 +50,5 @@ func readFile(filePath string, separator rune) ([][]string, error) {
 	return records, nil
 }
 
+func inferTypes(values []string) []string {
+}

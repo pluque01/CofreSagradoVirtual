@@ -37,3 +37,29 @@ func TestReadFile(t *testing.T) {
 		t.Logf("OK - %s", t.Name())
 	}
 }
+
+var inferTypesTests = []struct {
+	values   []string
+	expected []string
+}{
+	{[]string{"nombre", "apellidos", "telefono"}, []string{"name", "surname", "telephone"}},
+	{[]string{"NOMBRE", "ApEllidos", "Móvil"}, []string{"name", "surname", "telephone"}},
+	{[]string{"Nombre 1", "Apellido 2", "Número 3"}, []string{"name", "surname", "telephone"}},
+	{[]string{"Ciudad", "Calle", ""}, []string{"unknown", "unknown", "unknown"}},
+}
+
+func TestInferTypes(t *testing.T) {
+	for _, tt := range inferTypesTests {
+		t.Run(tt.values[0], func(t *testing.T) {
+			ans := inferTypes(tt.values)
+			if !reflect.DeepEqual(ans, tt.expected) {
+				t.Errorf("got %v, want %v", ans, tt.expected)
+			}
+		})
+	}
+	if t.Failed() {
+		t.Logf("FAIL - %s", t.Name())
+	} else {
+		t.Logf("OK - %s", t.Name())
+	}
+}
