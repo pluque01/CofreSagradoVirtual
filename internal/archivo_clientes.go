@@ -51,4 +51,16 @@ func readFile(filePath string, separator rune) ([][]string, error) {
 }
 
 func inferTypes(values []string) []string {
+	types := []string{}
+	for _, value := range values {
+		for _, dataType := range knownDataTypes {
+			// Matches only to the first known dataType
+			// If no match found, then it is unknown
+			if dataType.keyRegex.MatchString(value) {
+				types = append(types, dataType.key)
+				break
+			}
+		}
+	}
+	return types
 }
