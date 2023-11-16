@@ -16,6 +16,20 @@ type ClientFile struct {
 type ClientTypes struct {
 	types map[string]regexp.Regexp
 }
+
+type DataTypes struct {
+	key       string
+	keyRegex  regexp.Regexp
+	typeRegex regexp.Regexp
+}
+
+var knownDataTypes = []DataTypes{
+	{"name", *regexp.MustCompile(`(?i)(.*name.*|.*nombre.*)`), *regexp.MustCompile(`^[A-Za-z ]+$`)},
+	{"surname", *regexp.MustCompile(`(?i)(.*surname.*|.*apellido.*)`), *regexp.MustCompile(`^[A-Za-z ]+$`)},
+	{"telephone", *regexp.MustCompile(`(?i)(.*phone.*|.*tel(e|é)fono.*|.*m(o|ó)vil.*|.*n(u|ú)mero.*|.*number.*)`), *regexp.MustCompile(`^[0-9]+$`)},
+	{"unknown", *regexp.MustCompile(`.*`), *regexp.MustCompile(`.*`)},
+}
+
 func readFile(filePath string, separator rune) ([][]string, error) {
 	if separator == '\r' || separator == '\n' || separator == '\uFFFD' {
 		return nil, errors.New("invalid separator")
