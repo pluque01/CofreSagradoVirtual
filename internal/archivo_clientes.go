@@ -14,7 +14,7 @@ type ClientFile struct {
 }
 
 type ClientTypes struct {
-	types map[string]regexp.Regexp
+	types map[int]regexp.Regexp
 }
 
 type DataType struct {
@@ -27,6 +27,10 @@ var knownDataTypes = map[string]DataType{
 	"surname":   {*regexp.MustCompile(`(?i)(.*surname.*|.*apellido.*)`), *regexp.MustCompile(`^[A-Za-z ]+$`)},
 	"telephone": {*regexp.MustCompile(`(?i)(.*phone.*|.*tel(e|é)fono.*|.*m(o|ó)vil.*|.*n(u|ú)mero.*|.*number.*)`), *regexp.MustCompile(`^[0-9]+$`)},
 	"unknown":   {*regexp.MustCompile(`.*`), *regexp.MustCompile(`.*`)},
+}
+
+func NewClientTypes() *ClientTypes {
+	return &ClientTypes{types: map[int]regexp.Regexp{}}
 }
 
 func readFile(filePath string, separator rune) ([][]string, error) {
@@ -63,3 +67,17 @@ func inferTypes(values []string) []string {
 	}
 	return types
 }
+
+func NewClientFile(filePath string, separator rune) *ClientFile {
+	clientTypes := NewClientTypes()
+	records, err := readFile(filePath, separator)
+	if err != nil {
+		log.Fatal("Error reading file", err)
+	}
+	types := inferTypes(records[0])
+	for i := range records[0] {
+		clientTypes.types[i] = knownDataTypes[types[i]].TypeRegex
+	}
+	return &ClientFile{fileTypes: *clientTypes, fileContent: records[1:]}
+}
+

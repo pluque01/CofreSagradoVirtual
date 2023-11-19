@@ -63,3 +63,23 @@ func TestInferTypes(t *testing.T) {
 		t.Logf("OK - %s", t.Name())
 	}
 }
+
+func TestValidateFileContent(t *testing.T) {
+	validation := struct {
+		values   ClientFile
+		expected [][]bool
+	}{
+		values: *NewClientFile("../test/data/validate_file_content.csv", ';'),
+		expected: [][]bool{
+			{false, false, false},
+			{true, true, true},
+			{true, true, true},
+			{true, true, true},
+			{false, false, false},
+		},
+	}
+	ans := validation.values.ValidateFileContent()
+	if !reflect.DeepEqual(ans, &validation.expected) {
+		t.Errorf("got %v, want %v", ans, validation.expected)
+	}
+}
