@@ -23,9 +23,9 @@ type DataType struct {
 }
 
 var knownDataTypes = map[string]DataType{
-	"name":      {*regexp.MustCompile(`(?i)(.*name.*|.*nombre.*)`), *regexp.MustCompile(`^[A-Za-z ]+$`)},
-	"surname":   {*regexp.MustCompile(`(?i)(.*surname.*|.*apellido.*)`), *regexp.MustCompile(`^[A-Za-z ]+$`)},
-	"telephone": {*regexp.MustCompile(`(?i)(.*phone.*|.*tel(e|é)fono.*|.*m(o|ó)vil.*|.*n(u|ú)mero.*|.*number.*)`), *regexp.MustCompile(`^[0-9]+$`)},
+	"name":      {*regexp.MustCompile(`(?i)(.*name.*|.*nombre.*)`), *regexp.MustCompile(`^[A-ZÁÉÍÓÚÜÑ][a-záéíóúüÜñÑ]+(\s[A-ZÁÉÍÓÚÜÑ][a-záéíóúüÜñÑ]+)?(\s(?:(de|del)\s(?:las?\s)?[A-ZÁÉÍÓÚÜÑ][a-záéíóúüÜñÑ]+))?$`)},
+	"surname":   {*regexp.MustCompile(`(?i)(.*surname.*|.*apellido.*)`), *regexp.MustCompile(`^[A-ZÁÉÍÓÚÜÑ][a-záéíóúüñ]+(?:[-\s][A-ZÁÉÍÓÚÜÑ][a-záéíóúüñ]+)*(?:\s[A-ZÁÉÍÓÚÜÑ][a-záéíóúüñ]+(?:[-\s][A-ZÁÉÍÓÚÜÑ][a-záéíóúüñ]+)*)?$`)},
+	"telephone": {*regexp.MustCompile(`(?i)(.*phone.*|.*tel(e|é)fono.*|.*m(o|ó)vil.*|.*n(u|ú)mero.*|.*number.*)`), *regexp.MustCompile(`^\d{3}(?:[-\s]?\d{2,3}){2}$`)},
 }
 
 func NewClientTypes() *ClientTypes {
@@ -70,6 +70,19 @@ func inferTypes(values []string) []string {
 		}
 	}
 	return types
+}
+
+func (c *ClientFile) ValidateFileContent() *[][]bool {
+	results := [][]bool{}
+	for _, records := range c.fileContent {
+		columnResults := []bool{}
+		for i, value := range records {
+			pattern := c.fileTypes.types[i]
+			columnResults = append(columnResults, pattern.MatchString(value))
+		}
+		results = append(results, columnResults)
+	}
+	return &results
 }
 
 func NewClientFile(filePath string, separator rune) *ClientFile {
