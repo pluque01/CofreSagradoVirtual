@@ -26,7 +26,6 @@ var knownDataTypes = map[string]DataType{
 	"name":      {*regexp.MustCompile(`(?i)(.*name.*|.*nombre.*)`), *regexp.MustCompile(`^[A-Za-z ]+$`)},
 	"surname":   {*regexp.MustCompile(`(?i)(.*surname.*|.*apellido.*)`), *regexp.MustCompile(`^[A-Za-z ]+$`)},
 	"telephone": {*regexp.MustCompile(`(?i)(.*phone.*|.*tel(e|é)fono.*|.*m(o|ó)vil.*|.*n(u|ú)mero.*|.*number.*)`), *regexp.MustCompile(`^[0-9]+$`)},
-	"unknown":   {*regexp.MustCompile(`.*`), *regexp.MustCompile(`.*`)},
 }
 
 func NewClientTypes() *ClientTypes {
@@ -56,13 +55,18 @@ func readFile(filePath string, separator rune) ([][]string, error) {
 func inferTypes(values []string) []string {
 	types := []string{}
 	for _, value := range values {
+		found := false
 		for key, element := range knownDataTypes {
 			// Matches only to the first known dataType
 			// If no match found, then it is unknown
 			if element.KeyRegex.MatchString(value) {
 				types = append(types, key)
+				found = true
 				break
 			}
+		}
+		if !found {
+			types = append(types, "unknown")
 		}
 	}
 	return types
