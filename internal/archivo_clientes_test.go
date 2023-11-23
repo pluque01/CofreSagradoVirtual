@@ -2,6 +2,7 @@ package main
 
 import (
 	"reflect"
+	"regexp"
 	"testing"
 )
 
@@ -65,21 +66,34 @@ func TestInferTypes(t *testing.T) {
 }
 
 func TestValidateFileContent(t *testing.T) {
-	validation := struct {
-		values   ClientFile
-		expected [][]bool
-	}{
-		values: *NewClientFile("../test/data/validate_file_content.csv", ';'),
-		expected: [][]bool{
-			{false, false, false},
-			{true, true, true},
-			{true, true, true},
-			{true, true, true},
-			{false, false, false},
+	// Create a sample ClientFile instance with test data
+	clientFile := &ClientFile{
+		fileTypes: ClientTypes{
+			types: map[int]regexp.Regexp{
+				0: *regexp.MustCompile(`[A-Z][a-z]+`),
+				1: *regexp.MustCompile(`\d{3}-\d{3}-\d{4}`),
+			},
+		},
+		fileContent: [][]string{
+			{"John23", "123-456-7890"},
+			{"Jane", "abc-def-ghij"},
+			{"Jane", "abc def-ghij"},
 		},
 	}
-	ans := validation.values.ValidateFileContent()
-	if !reflect.DeepEqual(ans, &validation.expected) {
-		t.Errorf("got %v, want %v", ans, validation.expected)
+
+	// Define the expected results
+	expectedResults := [][]string{
+		{"23", ""},
+		{"", "abc-def-ghij"},
+		{"", "abc def-ghij"},
+	}
+
+	// Call the method being tested
+	results := clientFile.ValidateFileContent()
+
+	// Compare the actual results with the expected results
+	if !reflect.DeepEqual(*results, expectedResults) {
+		t.Errorf("Validation failed. Expected: %v, but got: %v", expectedResults, *results)
 	}
 }
+
