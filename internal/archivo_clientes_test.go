@@ -97,3 +97,32 @@ func TestValidateFileContent(t *testing.T) {
 	}
 }
 
+func TestGetNonMatchingPattern(t *testing.T) {
+	originalStr := "Hello, World!"
+	matchingStr := "Hello"
+	expectedResult := ", World!"
+
+	result, err := getNonMatchingPattern(originalStr, matchingStr)
+	if err != nil {
+		t.Errorf("Unexpected error: %v", err)
+	}
+
+	if result != expectedResult {
+		t.Errorf("Expected %q, but got %q", expectedResult, result)
+	}
+}
+
+func TestGetMatchingRuneIndex(t *testing.T) {
+	a := "Hello, World!"
+	r := 'o'
+	expectedResult := 4
+
+	result, err := getMatchingRuneIndex(a, r)
+	if err != nil {
+		t.Errorf("Unexpected error: %v", err)
+	}
+
+	if result != expectedResult {
+		t.Errorf("Expected %d, but got %d", expectedResult, result)
+	}
+}
