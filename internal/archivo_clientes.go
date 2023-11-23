@@ -72,17 +72,54 @@ func inferTypes(values []string) []string {
 	return types
 }
 
-func (c *ClientFile) ValidateFileContent() *[][]bool {
-	results := [][]bool{}
+func (c *ClientFile) ValidateFileContent() *[][]string {
+	results := [][]string{}
 	for _, records := range c.fileContent {
-		columnResults := []bool{}
+		columnResults := []string{}
 		for i, value := range records {
+			var nonMatches string
+			var err error
 			pattern := c.fileTypes.types[i]
-			columnResults = append(columnResults, pattern.MatchString(value))
+			matches := pattern.FindStringSubmatch(value)
+			if len(matches) == 0 {
+				nonMatches = value
+			} else if value != matches[0] {
+				nonMatches, err = getNonMatchingPattern(value, matches[0])
+				if err != nil {
+					log.Println(err)
+				}
+			}
+			columnResults = append(columnResults, nonMatches)
 		}
 		results = append(results, columnResults)
 	}
 	return &results
+}
+
+func getMatchingRuneIndex(a string, r rune) (int, error) {
+	for i, c := range a {
+		if c == r {
+			return i, nil
+		}
+	}
+	return 0, errors.New("no matching character")
+}
+
+func getNonMatchingPattern(originalStr, matchingStr string) (string, error) {
+	// Find the non-matching part
+	var nonMatchingPart string
+	firstMatchIndex, err := getMatchingRuneIndex(originalStr, rune(matchingStr[0]))
+	if err != nil {
+		return "", err
+	}
+	startRange := firstMatchIndex
+	endRange := firstMatchIndex + len(matchingStr)
+	for i, c := range originalStr {
+		if i < startRange || i >= endRange {
+			nonMatchingPart += string(c)
+		}
+	}
+	return nonMatchingPart, nil
 }
 
 func NewClientFile(filePath string, separator rune) *ClientFile {
