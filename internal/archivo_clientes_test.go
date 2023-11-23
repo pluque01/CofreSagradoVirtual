@@ -1,6 +1,7 @@
 package main
 
 import (
+	"math"
 	"reflect"
 	"regexp"
 	"testing"
@@ -95,6 +96,85 @@ func TestValidateFileContent(t *testing.T) {
 	if !reflect.DeepEqual(*results, expectedResults) {
 		t.Errorf("Validation failed. Expected: %v, but got: %v", expectedResults, *results)
 	}
+}
+
+var jaroWinklerTests = []struct {
+	s1       string
+	s2       string
+	expected float64
+}{
+	{"carlos", "carlps", 0.933},
+	{"pablo", "pavlo", 0.893},
+	{"rebeca", "rebecca", 0.971},
+	{"maría", "maria", 0.875},
+}
+
+func TestJaroWinkler(t *testing.T) {
+	for _, tt := range jaroWinklerTests {
+		t.Run(tt.s1, func(t *testing.T) {
+			ans, err := JaroWinkler(tt.s1, tt.s2)
+			if err != nil {
+				t.Errorf("Error: %v", err)
+			}
+
+			if math.Abs(ans-tt.expected) > 0.001 {
+				t.Errorf("got %v, want %v", ans, tt.expected)
+			}
+		})
+	}
+}
+
+func TestRecommendStrings(t *testing.T) {
+	names := []string{"John", "Jane", "Jack", "Jill", "Jim"}
+
+	t.Run("Matching name found", func(t *testing.T) {
+		name := "John"
+		expected := []string{"John"}
+		result, err := RecommendStrings(name, &names)
+		if err != nil {
+			t.Errorf("Unexpected error: %v", err)
+		}
+		if !reflect.DeepEqual(result, expected) {
+			t.Errorf("RecommendStrings(%s, %v) = %v, expected %v", name, names, result, expected)
+		}
+	})
+
+	t.Run("No matching name found", func(t *testing.T) {
+		name := "Alex"
+		expected := []string{}
+		result, err := RecommendStrings(name, &names)
+		if err == nil {
+			t.Errorf("Expected error, but got nil")
+		}
+		if !reflect.DeepEqual(result, expected) {
+			t.Errorf("RecommendStrings(%s, %v) = %v, expected %v", name, names, result, expected)
+		}
+	})
+
+	t.Run("Multiple matching names found", func(t *testing.T) {
+		name := "Ji"
+		expected := []string{"Jim", "Jill"}
+		result, err := RecommendStrings(name, &names)
+		if err != nil {
+			t.Errorf("Unexpected error: %v", err)
+		}
+		if !reflect.DeepEqual(result, expected) {
+			t.Errorf("RecommendStrings(%s, %v) = %v, expected %v", name, names, result, expected)
+		}
+	})
+
+	t.Run("Empty names list", func(t *testing.T) {
+		name := "John"
+		names := []string{}
+		expected := []string{}
+		result, err := RecommendStrings(name, &names)
+		if err == nil {
+			t.Errorf("Expected error, but got nil")
+		}
+		if !reflect.DeepEqual(result, expected) {
+			t.Errorf("RecommendStrings(%s, %v) = %v, expected %v", name, names, result, expected)
+		}
+	})
 }
 
 func TestGetNonMatchingPattern(t *testing.T) {
