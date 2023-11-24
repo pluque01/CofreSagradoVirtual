@@ -1,10 +1,11 @@
-package main
+package validcsv
 
 import (
-	"math"
 	"reflect"
 	"regexp"
 	"testing"
+
+	"github.com/pluque01/CofreSagradoVirtual/internal/projectpath"
 )
 
 var readFileTests = []struct {
@@ -13,11 +14,11 @@ var readFileTests = []struct {
 	expected    [][]string
 	separator   rune
 }{
-	{"", "../test/data/default.csv", [][]string{{"Nombre", "Apellido", "telefono"}, {"juan", "Perez", "123456789"}, {"paco", "Gomez", "987654321"}}, ';'},
-	{"", "../test/data/compound_record.csv", [][]string{{"Nombre", "Apellido", "telefono"}, {"Juan Alberto", "Perez", "123456789"}, {"Francisco Javier", "Gomez", "987654321"}}, ';'},
-	{"", "../test/data/missing_record.csv", [][]string{{"Nombre", "Apellido", "telefono"}, {"juan", "", "123456789"}, {"paco", "Gomez", ""}}, ','},
-	{"", "../test/data/missing_type.csv", [][]string{{"Nombre", "", "telefono"}, {"juan", "Perez", "123456789"}, {"paco", "Gomez", "987654321"}}, ';'},
-	{"invalid separator", "../test/data/default.csv", [][]string{{"Nombre", "Apellido", "telefono"}, {"juan", "Perez", "123456789"}, {"paco", "Gomez", "987654321"}}, '\r'},
+	{"", string(projectpath.Root + "/test/data/default.csv"), [][]string{{"Nombre", "Apellido", "telefono"}, {"juan", "Perez", "123456789"}, {"paco", "Gomez", "987654321"}}, ';'},
+	{"", string(projectpath.Root + "/test/data/compound_record.csv"), [][]string{{"Nombre", "Apellido", "telefono"}, {"Juan Alberto", "Perez", "123456789"}, {"Francisco Javier", "Gomez", "987654321"}}, ';'},
+	{"", string(projectpath.Root + "/test/data/missing_record.csv"), [][]string{{"Nombre", "Apellido", "telefono"}, {"juan", "", "123456789"}, {"paco", "Gomez", ""}}, ','},
+	{"", string(projectpath.Root + "/test/data/missing_type.csv"), [][]string{{"Nombre", "", "telefono"}, {"juan", "Perez", "123456789"}, {"paco", "Gomez", "987654321"}}, ';'},
+	{"invalid separator", string(projectpath.Root + "/test/data/default.csv"), [][]string{{"Nombre", "Apellido", "telefono"}, {"juan", "Perez", "123456789"}, {"paco", "Gomez", "987654321"}}, '\r'},
 }
 
 func TestReadFile(t *testing.T) {
@@ -95,32 +96,6 @@ func TestValidateFileContent(t *testing.T) {
 	// Compare the actual results with the expected results
 	if !reflect.DeepEqual(*results, expectedResults) {
 		t.Errorf("Validation failed. Expected: %v, but got: %v", expectedResults, *results)
-	}
-}
-
-var jaroWinklerTests = []struct {
-	s1       string
-	s2       string
-	expected float64
-}{
-	{"carlos", "carlps", 0.933},
-	{"pablo", "pavlo", 0.893},
-	{"rebeca", "rebecca", 0.971},
-	{"maría", "maria", 0.875},
-}
-
-func TestJaroWinkler(t *testing.T) {
-	for _, tt := range jaroWinklerTests {
-		t.Run(tt.s1, func(t *testing.T) {
-			ans, err := JaroWinkler(tt.s1, tt.s2)
-			if err != nil {
-				t.Errorf("Error: %v", err)
-			}
-
-			if math.Abs(ans-tt.expected) > 0.001 {
-				t.Errorf("got %v, want %v", ans, tt.expected)
-			}
-		})
 	}
 }
 
