@@ -50,3 +50,56 @@ Sin embargo, esta herramienta también se usa para comprobar otros aspectos del
 código, actuando como *linter*. Por tanto, para la comprobación de sintaxis voy
 a usar la herramienta [gofmt](https://golang.org/cmd/gofmt/), que es la que se
 usa por defecto en Go y viene ya preinstalada.
+
+## Framework para tests
+
+Es importante que un proyecto realice test para comprobar que el código funciona
+correctamente. Go cuenta con una herramienta para definir tests integrada en la
+librería estándar, pero su funcionalidad es limitada, ya que no cuenta con
+*assertions* y otras funciones. Por ello existen otros frameworks de test que
+añaden funcionalidades extra. Los más populares son:
+
+### [Testify](https://github.com/stretchr/testify)
+
+- Proporciona una variedad de funciones de *assertions*, lo que facilita la
+  escritura de tests claros y concisos.
+- Ofrece soporte para declarar conjuntos de tests y funciones de limpieza.
+- Funciona con el paquete de tests nativo de Go, lo que facilita su integración
+  con su módulo de tests existente.
+- Proporciona mensajes de error útiles que ayudan a identificar y corregir
+  rápidamente problemas en el código.
+- Fácil de aprender y utilizar.
+
+### [Ginkgo](https://github.com/onsi/ginkgo)
+
+- Proporciona una sintaxis estilo BDD, lo que facilita la escritura de tests que
+  son legibles y fáciles de entender.
+- Ofrece soporte para tests asíncronos, lo que facilita la evaluación de código
+  que involucra concurrencia.
+- Incluye soporte para aserciones anidadas, lo que facilita la organización y
+  estructuración de los tests.
+- Ofrece soporte para reportes personalizados, lo que permite personalizar la
+  salida de los tests.
+
+### Decisión para el proyecto
+
+Aunque las librerías mencionadas anteriormente son muy buenas, el criterio que
+voy a seguir para este proyecto va a ser el de las mejores prácticas para Go. En
+este caso tenemos los [proverbios de Go](https://go-proverbs.github.io). Uno de
+ellos dice lo siguiente:
+
+> A little copying is better than a little dependency.
+
+Incluir un framework de tests en el proyecto es una dependencia que no es
+estrictamente necesario, ya que el módulo de tests de Go suele ser suficiente
+para la mayoría de casos, y muchas funciones como las de *assertions* se pueden
+programar manualmente.
+
+Por tanto, no voy a incluir ningún framework de tests en el proyecto.
+
+## Herramienta para ejecutar los tests
+
+Go incluye una herramienta para ejecutar los tests:
+[go test](https://pkg.go.dev/cmd/go/internal/test). Es la herramienta por
+defecto y forma parte del estado del arte de Go. Por tanto, no es necesario
+incluir otra herramienta para ejecutar los tests.
