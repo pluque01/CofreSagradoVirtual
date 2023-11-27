@@ -103,3 +103,49 @@ Go incluye una herramienta para ejecutar los tests:
 [go test](https://pkg.go.dev/cmd/go/internal/test). Es la herramienta por
 defecto y forma parte del estado del arte de Go. Por tanto, no es necesario
 incluir otra herramienta para ejecutar los tests.
+
+## Imagen de Docker
+
+### Criterios de elección
+
+- **Huella de memoria pequeña**: la imagen debe ser lo más pequeña posible para
+  disminuir el tiempo necesario para descargarla y ejecutarla.
+
+- **Herramientas necesarias para el desarrollo**: la imagen debe incluir el
+  mayor número posible de herramientas necesarias para mi proyecto, en este caso
+  un proyecto de Go.
+
+- **Soporte**: la imagen debe estar mantenida y actualizada.
+
+### Opciones a considerar
+
+- [golang](https://hub.docker.com/_/golang): imagen oficial de Docker para Go y
+  es mantenida por la comunidad de Docker. Es una imagen muy popular, con más de
+  mil millones de descargas. Al ser la imagen oficial de Docker, está muy bien
+  mantenida y actualizada. Tiene varias variantes disponibles:
+
+  - `golang`: es la imagen por defecto, basado en Debian.
+
+  - `golang:alpine`: basado en Alpine Linux, una distribución muy ligera de
+    Linux que tiene un tamaño de 5MB. Esta imagen sin embargo tiene un número
+    mínimo de herramientas, dejando que sea el usuario el que instale las
+    herramientas que necesite.
+
+- [alpine](https://hub.docker.com/_/alpine): imagen de Alpine Linux, una
+  distribución muy ligera de Linux que tiene un tamaño de 5MB. Esta imagen sin
+  embargo, tiene un número mínimo de herramientas, dejando que sea el usuario el
+  que instale las herramientas que necesite.
+
+- Imágenes basadas en distribuciones de Linux como Debian, Ubuntu, CentOS,
+  Fedora: estas imágenes tienen un tamaño mayor que las imágenes basadas en
+  Alpine Linux, pero incluyen más herramientas por defecto. Sin embargo, no
+  tienen instaladas las herramientas de Go.
+
+### Decisión para el proyecto
+
+Siguiendo los criterios de elección, la imagen que voy a usar para el proyecto
+va a ser la oficial de Go basada en Alpine Linux. Esta imagen tiene un tamaño
+mínimo e incluye las herramientas necesarias para Go. En concreto voy a usar la
+versión `1.21-alpine3.17`, que tiene
+[menos vulnerabilidades](https://hub.docker.com/_/golang/tags?page=1&name=alpine)
+que la versión `1.21-alpine3.18`.
