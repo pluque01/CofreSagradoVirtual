@@ -51,3 +51,12 @@ go run ./build/ test
 
 Las diferentes herramientas de desarrollo utilizadas en este proyecto se pueden
 encontrar [aquí](doc/tools.md).
+
+## Uso de Docker
+
+Se puede utilizar Docker para probar el proyecto. Para ello, se debe ejecutar el
+siguiente comando:
+
+```bash
+docker build -t pluque01/cofre-sagrado-virtual . && docker run -t -v `pwd`:/app/test pluque01/cofre-sagrado-virtual
+```
