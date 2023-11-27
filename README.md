@@ -58,12 +58,12 @@ Se puede utilizar Docker para probar el proyecto. Para ello, se debe ejecutar el
 siguiente comando:
 
 ```bash
-docker build -t pluque01/cofre-sagrado-virtual . && docker run -t -v `pwd`:/app/test pluque01/cofre-sagrado-virtual
+docker build -t pluque01/cofresagradovirtual . && docker run -t -v `pwd`:/app/test pluque01/cofresagradovirtual
 ```
 
 También se puede usar la imagen de
-[Docker Hub](https://hub.docker.com/repository/docker/fallenmeteor/cofre-sagrado-virtual/):
+[Docker Hub](https://hub.docker.com/repository/docker/fallenmeteor/cofresagradovirtual/):
 
 ```bash
-docker run -t -v `pwd`:/app/test fallenmeteor/cofre-sagrado-virtual:latest
+docker run -t -v `pwd`:/app/test fallenmeteor/cofresagradovirtual:latest
 ```
