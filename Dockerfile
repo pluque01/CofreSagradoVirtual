@@ -11,4 +11,6 @@ WORKDIR /app/test
 
 COPY go.mod go.sum ./
 
+RUN go mod download
+
 ENTRYPOINT ["go", "run", "./build/", "-v", "test"]
