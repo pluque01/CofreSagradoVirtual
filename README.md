@@ -60,3 +60,10 @@ siguiente comando:
 ```bash
 docker build -t pluque01/cofre-sagrado-virtual . && docker run -t -v `pwd`:/app/test pluque01/cofre-sagrado-virtual
 ```
+
+También se puede usar la imagen de
+[Docker Hub](https://hub.docker.com/repository/docker/fallenmeteor/cofre-sagrado-virtual/):
+
+```bash
+docker run -t -v `pwd`:/app/test fallenmeteor/cofre-sagrado-virtual:latest
+```
