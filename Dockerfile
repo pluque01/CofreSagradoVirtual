@@ -7,10 +7,12 @@ RUN adduser -D -u 1001 test
 
 USER test
 
-WORKDIR /app/test
+WORKDIR /app
 
 COPY go.mod go.sum ./
 
 RUN go mod download
+
+WORKDIR /app/test
 
 ENTRYPOINT ["go", "run", "./build/", "-v", "test"]
