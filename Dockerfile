@@ -1,11 +1,19 @@
-FROM golang:1.21-alpine3.17
+FROM golang:latest AS build
+
+FROM debian:stable-slim AS final
 
 LABEL maintainer="pluque01@correo.ugr.es" \
   version="1.1"
 
-RUN adduser -D -u 1001 test
+# Multi-stage build to copy golang toolchain
+COPY --from=golang:latest /usr/local/go/ /usr/local/go/
+ENV PATH="/usr/local/go/bin:${PATH}"
+# Copy certificates
+COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
-USER test
+RUN adduser --disabled-password -u 1001 golanguser
+
+USER golanguser
 
 WORKDIR /app
 
