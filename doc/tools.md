@@ -111,9 +111,8 @@ incluir otra herramienta para ejecutar los tests.
 - **Huella de memoria pequeña**: la imagen debe ser lo más pequeña posible para
   disminuir el tiempo necesario para descargarla y ejecutarla.
 
-- **Herramientas necesarias para el desarrollo**: la imagen debe incluir el
-  mayor número posible de herramientas necesarias para mi proyecto, en este caso
-  un proyecto de Go.
+- **Seguridad**: la imagen debe tener el menor número de vulnerabilidades
+  posible.
 
 - **Soporte**: la imagen debe estar mantenida y actualizada.
 
@@ -127,25 +126,39 @@ incluir otra herramienta para ejecutar los tests.
   - `golang`: es la imagen por defecto, basado en Debian.
 
   - `golang:alpine`: basado en Alpine Linux, una distribución muy ligera de
-    Linux que tiene un tamaño de 5MB. Esta imagen sin embargo tiene un número
-    mínimo de herramientas, dejando que sea el usuario el que instale las
-    herramientas que necesite.
+    Linux que tiene un tamaño de 5MB. Esta imagen tiene un número mínimo de
+    herramientas, dejando que sea el usuario el que instale las herramientas que
+    necesite.
 
 - [alpine](https://hub.docker.com/_/alpine): imagen de Alpine Linux, una
-  distribución muy ligera de Linux que tiene un tamaño de 5MB. Esta imagen sin
+  distribución muy ligera de Linux que tiene un tamaño de 5MB. Esta imagen, sin
   embargo, tiene un número mínimo de herramientas, dejando que sea el usuario el
   que instale las herramientas que necesite.
 
-- Imágenes basadas en distribuciones de Linux como Debian, Ubuntu, CentOS,
-  Fedora: estas imágenes tienen un tamaño mayor que las imágenes basadas en
-  Alpine Linux, pero incluyen más herramientas por defecto. Sin embargo, no
-  tienen instaladas las herramientas de Go.
+- [bitnami](https://hub.docker.com/r/bitnami/golang): imagen de Bitnami para Go.
+  Son builds automatizadas con los últimos cambios. Están basadas en Minideb,
+  una distribución ligera de Debian.
+
+- [debian](https://hub.docker.com/_/debian): Imagen de la distribución Debian.
+  No incluye las herramientas para trabajar con Go por defecto, pero tiene una
+  versión `slim` con un tamaño de memoria reducido.
 
 ### Decisión para el proyecto
 
 Siguiendo los criterios de elección, la imagen que voy a usar para el proyecto
-va a ser la oficial de Go basada en Alpine Linux. Esta imagen tiene un tamaño
-mínimo e incluye las herramientas necesarias para Go. En concreto voy a usar la
-versión `1.21-alpine3.17`, que tiene
-[menos vulnerabilidades](https://hub.docker.com/_/golang/tags?page=1&name=alpine)
-que la versión `1.21-alpine3.18`.
+va a ser la imagen de Debian en su versión `slim`. Esta imagen tiene un tamaño
+reducido al igual que la imagen de Alpine, pero la de Alpine tiene alguna
+vulnerabilidad crítica, mientras que la de Debian solo tiene
+[vulnerabilidades leves](https://hub.docker.com/_/debian/tags?page=1&name=stable-slim).
+
+Sin embargo, la imagen de Debian no incluye las herramientas para trabajar con
+Go, por lo que se tendrá que instalar manualmente. Para ello usaré un
+[`multi-stage build`](https://docs.docker.com/build/building/multi-stage/) para
+copiar las herramientas desde una imagen de Go a la imagen final.
+
+Por ello usaré las siguientes imágenes:
+
+- `golang:latest` como fuente donde copiar las herramientas de Go. Nos interesa
+  que sea la versión latest para comprobar nuestro código con la última versión
+  de Go disponible.
+- `debian:stable-slim` como imagen final.
