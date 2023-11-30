@@ -182,3 +182,51 @@ Por ello usaré las siguientes imágenes:
 - **Servicio disponible en la nube:** Es mejor que el sistema sea un servicio
   disponible en la nube, ya que no tengo que preocuparme de su mantenimiento ni
   por su infraestructura.
+
+### Opciones a considerar
+
+#### [Jenkins](https://www.jenkins.io)
+
+Jenkins es una opción sólida de integración continua que destaca por su
+naturaleza de código abierto y su capacidad altamente extensible. Es compatible
+con Golang y ofrece una amplia integración con diferentes herramientas gracias a
+su extenso conjunto de plugins. La configuración se simplifica mediante una
+interfaz web, facilitando la adaptación a las necesidades del proyecto. Jenkins
+cuenta con una comunidad activa y una diversidad de recursos disponibles.
+
+#### [Travis CI](https://travis-ci.com)
+
+Travis CI se destaca por su enfoque en proyectos de código abierto y su
+integración directa con GitHub, proporcionando una configuración basada en
+archivos YAML. Compatible con Golang, ofrece soporte para varios lenguajes de
+programación. Además, su entorno de ejecución en contenedores Docker brinda
+coherencia y aislamiento en el proceso de integración continua. Ofrece un
+periodo de prueba tras el cual es necesario pagar para seguir usando el sistema.
+
+#### [CircleCI](https://circleci.com)
+
+CircleCI es reconocido por su capacidad para ejecutar pruebas en paralelo,
+acelerando significativamente el proceso de integración continua. Compatible con
+Golang, se integra con GitHub y Bitbucket. Su configuración se basa en archivos
+YAML, y su compatibilidad con contenedores Docker facilitan la personalización y
+la integración con entornos basados en Docker. CircleCI ofrece un plan gratuito
+con 6000 minutos de ejecución de trabajos al mes, lo que lo hace ideal para
+proyectos pequeños.
+
+#### [GitHub Actions](https://docs.github.com/es/actions)
+
+GitHub Actions se destaca por su integración directa con la plataforma GitHub,
+proporcionando una solución completa para la integración continua y entrega
+continua (CI/CD). Utiliza archivos con formato `yaml` para su configuración por
+lo que no es tan visual como otras alternativas. Ofrece una amplia biblioteca de
+acciones predefinidas y la posibilidad de crear acciones personalizadas para
+adaptarse a necesidades específicas del proyecto. Para repositorios públicos es
+gratuito, mientras que para repositorios privados se aplican límites de uso.
+
+#### [Semaphore](https://semaphoreci.com)
+
+Semaphore es reconocido por su compatibilidad con Golang y una variedad de
+lenguajes. Se integra con plataformas populares como GitHub y Bitbucket,
+permitiendo una configuración sencilla. La ejecución de trabajos en contenedores
+Docker facilita la integración con entornos basados en Docker. Tiene disponible
+un período de prueba tras el cual hay que abonar un importe.
