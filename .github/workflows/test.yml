@@ -1,0 +1,28 @@
+name: Test on different versions
+
+on:
+  push:
+
+jobs:
+  run-test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+      os: [ubuntu-latest, windows-latest]
+      go: [1.21, 1.20]
+
+    steps:
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ matrix.go }}
+        id: go
+
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Run tests
+        run: go run ./build/ -v test
+
+      - name: Display Go version
+        run: go version
