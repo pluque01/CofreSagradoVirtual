@@ -162,3 +162,23 @@ Por ello usaré las siguientes imágenes:
   que sea la versión latest para comprobar nuestro código con la última versión
   de Go disponible.
 - `debian:stable-slim` como imagen final.
+
+## Herramientas de integración continua
+
+### Criterios de elección
+
+- **Compatibilidad con el lenguaje**: Necesito asegurarme de que el sistema sea
+  compatible con Golang.
+
+- **Integración con herramientas existentes:** El sistema debe integrarse sin
+  problemas con las herramientas que uso actualmente, como Github y que tengan
+  disponible el uso de la API Checks de Github.
+
+- **Compatibilidad con contenedores:** Dado que estoy utilizando contenedores
+  Docker, es esencial que el sistema sea compatible con estas tecnologías.
+
+- **Coste:** Debo considerar el coste asociado con al uso del sistema.
+
+- **Servicio disponible en la nube:** Es mejor que el sistema sea un servicio
+  disponible en la nube, ya que no tengo que preocuparme de su mantenimiento ni
+  por su infraestructura.
