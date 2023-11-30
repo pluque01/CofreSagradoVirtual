@@ -1,7 +1,7 @@
 package stringmetrics
 
 import (
-  "math"
+	"math"
 	"testing"
 )
 
