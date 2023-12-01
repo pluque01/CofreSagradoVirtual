@@ -1,12 +1,21 @@
 # appveyor.yml
-build: off
+version: 1.0.0.{build}
+
+platform: x64
 
 clone_folder: /usr/go/src/github.com/$username/$project
 
 environment:
   GOPATH: /usr/go/
 
-stack: go 1.21
+install:
+  - echo %PATH%
+  - echo %GOPATH%
+  - set PATH=%GOPATH%\bin;c:\go\bin;%PATH%
+  - go version
+  - go env
+
+# stack: go 1.21
 
 before_test:
   - go vet ./...
