@@ -19,13 +19,13 @@ func JaroWinkler(s1, s2 string) (float64, error) {
 	halfTranspositions := 0
 
 	// Define the match distance
-	matchDistance := (max(len(s1), len(s2)) / 2) - 1
+	matchDistance := (Max(len(s1), len(s2)) / 2) - 1
 
 	// Loop over the first string
 	for i := 0; i < len(s1); i++ {
 		// Define the start and end index for comparison
-		start := max(0, i-matchDistance)
-		end := min(i+matchDistance+1, len(s2))
+		start := Max(0, i-matchDistance)
+		end := Min(i+matchDistance+1, len(s2))
 
 		// Loop over the second string within the defined range
 		for j := start; j < end; j++ {
@@ -70,7 +70,7 @@ func JaroWinkler(s1, s2 string) (float64, error) {
 		((float64(matches) - float64(transpositions)) / float64(matches))) / 3.0
 	// Calculate the prefix length
 	prefix := 0
-	length := min(len(s1), len(s2))
+	length := Min(len(s1), len(s2))
 	for i := 0; i < length; i++ {
 		if s1[i] != s2[i] {
 			break
@@ -85,14 +85,14 @@ func JaroWinkler(s1, s2 string) (float64, error) {
 	return jaro + (float64(prefix) * cl * (1 - jaro)), nil
 }
 
-func max(a, b int) int {
+func Max(a, b int) int {
 	if a > b {
 		return a
 	}
 	return b
 }
 
-func min(a, b int) int {
+func Min(a, b int) int {
 	if a < b {
 		return a
 	}

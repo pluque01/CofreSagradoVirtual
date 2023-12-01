@@ -162,3 +162,92 @@ Por ello usaré las siguientes imágenes:
   que sea la versión latest para comprobar nuestro código con la última versión
   de Go disponible.
 - `debian:stable-slim` como imagen final.
+
+## Herramientas de integración continua
+
+### Criterios de elección
+
+- **Compatibilidad con el lenguaje**: Necesito asegurarme de que el sistema sea
+  compatible con Golang.
+
+- **Integración con herramientas existentes:** El sistema debe integrarse sin
+  problemas con las herramientas que uso actualmente, como Github y que tengan
+  disponible el uso de la API Checks de Github.
+
+- **Compatibilidad con contenedores:** Dado que estoy utilizando contenedores
+  Docker, es esencial que el sistema sea compatible con estas tecnologías.
+
+- **Coste:** Debo considerar el coste asociado con al uso del sistema.
+
+- **Servicio disponible en la nube:** Es mejor que el sistema sea un servicio
+  disponible en la nube, ya que no tengo que preocuparme de su mantenimiento ni
+  por su infraestructura.
+
+### Opciones a considerar
+
+#### [Travis CI](https://travis-ci.com)
+
+Travis CI se destaca por su enfoque en proyectos de código abierto y su
+integración directa con GitHub, proporcionando una configuración basada en
+archivos YAML. Compatible con Golang, ofrece soporte para varios lenguajes de
+programación. Además, su entorno de ejecución en contenedores Docker brinda
+coherencia y aislamiento en el proceso de integración continua. Ofrece un
+periodo de prueba tras el cual es necesario pagar para seguir usando el sistema.
+
+#### [CircleCI](https://circleci.com)
+
+CircleCI es reconocido por su capacidad para ejecutar pruebas en paralelo,
+acelerando significativamente el proceso de integración continua. Compatible con
+Golang, se integra con GitHub y Bitbucket. Su configuración se basa en archivos
+YAML, y su compatibilidad con contenedores Docker facilitan la personalización y
+la integración con entornos basados en Docker. CircleCI ofrece un plan gratuito
+con 6000 minutos de ejecución de trabajos al mes, lo que lo hace ideal para
+proyectos pequeños.
+
+#### [GitHub Actions](https://docs.github.com/es/actions)
+
+GitHub Actions se destaca por su integración directa con la plataforma GitHub,
+proporcionando una solución completa para la integración continua y entrega
+continua (CI/CD). Utiliza archivos con formato `yaml` para su configuración por
+lo que no es tan visual como otras alternativas. Ofrece una amplia biblioteca de
+acciones predefinidas y la posibilidad de crear acciones personalizadas para
+adaptarse a necesidades específicas del proyecto. Para repositorios públicos es
+gratuito, mientras que para repositorios privados se aplican límites de uso.
+
+#### [Semaphore](https://semaphoreci.com)
+
+Semaphore es reconocido por su compatibilidad con Golang y una variedad de
+lenguajes. Se integra con plataformas populares como GitHub y Bitbucket,
+permitiendo una configuración sencilla. La ejecución de trabajos en contenedores
+Docker facilita la integración con entornos basados en Docker. Tiene disponible
+un período de prueba tras el cual hay que abonar un importe.
+
+### Decisión para el proyecto
+
+Las opciones que solo ofrecen periodos de prueba las voy a descartar, ya que no
+tengo pensado invertir dinero en este proyecto. Por tanto, las únicas opciones
+disponibles son CircleCI y GitHub Actions. Entre estas dos, la opción más
+recomendable es GitHub Actions, no por tener un número de minutos ilimitados,
+sino porque ya lo estoy usando para construir el contenedor de Docker y subirlo
+a Docker Hub.
+
+Sin embargo, voy a probar ambas opciones.
+
+- He intentado configurar CircleCI, pero cuando iba a crear el workflow he ido a
+  la documentación para ver como podía integrarlo con la API Checks de Github y
+  he visto que no es posible
+  [por algún motivo que no logro entender](https://circleci.com/docs/enable-checks/).
+  Por tanto, descarto CircleCI.
+
+- Github Actions: Con Github Actions no he tenido ningún problema. He creado un
+  workflow que ejecuta los tests en dos versiones de Go, la 1.21 y la 1.20,
+  ambas en una máquina con Ubuntu.
+
+- AppVeyor: esta opción me la recomendó @JJ como alternativa a CircleCI, ya que
+  yo no la había considerado en un primer momento. Ha sido más complicado de
+  configurar que GitHub Actions, al no haber encontrado una documentación tan
+  completa. Sin embargo, he conseguido configurarla y ejecuta los tests para las
+  versiones 1.21 y 1.20 de Go en Windows.
+
+Nota: al final no he usado el contenedor de Docker, ya que este no me permite
+probar las distintas versiones de Go.
