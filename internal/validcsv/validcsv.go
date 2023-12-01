@@ -126,7 +126,7 @@ func RecommendStrings(name string, names *[]string) ([]string, error) {
 	sort.Slice(matches, func(i, j int) bool {
 		return matches[i].value > matches[j].value
 	})
-	matchesSplit := matches[:min(int(MaxRecommendations), len(matches))]
+	matchesSplit := matches[:stringmetrics.Min(int(MaxRecommendations), len(matches))]
 	recommendations := []string{}
 
 	for _, recommendation := range matchesSplit {
