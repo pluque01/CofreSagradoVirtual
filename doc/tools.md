@@ -185,15 +185,6 @@ Por ello usaré las siguientes imágenes:
 
 ### Opciones a considerar
 
-#### [Jenkins](https://www.jenkins.io)
-
-Jenkins es una opción sólida de integración continua que destaca por su
-naturaleza de código abierto y su capacidad altamente extensible. Es compatible
-con Golang y ofrece una amplia integración con diferentes herramientas gracias a
-su extenso conjunto de plugins. La configuración se simplifica mediante una
-interfaz web, facilitando la adaptación a las necesidades del proyecto. Jenkins
-cuenta con una comunidad activa y una diversidad de recursos disponibles.
-
 #### [Travis CI](https://travis-ci.com)
 
 Travis CI se destaca por su enfoque en proyectos de código abierto y su
@@ -233,13 +224,12 @@ un período de prueba tras el cual hay que abonar un importe.
 
 ### Decisión para el proyecto
 
-En primer lugar, descarto Jenkins por no ser un servicio en la nube y requerir
-su instalación. Las opciones que solo ofrecen periodos de prueba también las
-descarto, ya que no tengo pensado invertir dinero en este proyecto. Por tanto,
-las únicas opciones disponibles son CircleCI y GitHub Actions. Entre estas dos,
-la opción más recomendable es GitHub Actions, no por tener un número de minutos
-ilimitados, sino porque ya lo estoy usando para construir el contenedor de
-Docker y subirlo a Docker Hub.
+Las opciones que solo ofrecen periodos de prueba las voy a descartar, ya que no
+tengo pensado invertir dinero en este proyecto. Por tanto, las únicas opciones
+disponibles son CircleCI y GitHub Actions. Entre estas dos, la opción más
+recomendable es GitHub Actions, no por tener un número de minutos ilimitados,
+sino porque ya lo estoy usando para construir el contenedor de Docker y subirlo
+a Docker Hub.
 
 Sin embargo, voy a probar ambas opciones.
 
