@@ -4,3 +4,6 @@ automatizar:
   fichero: build/main.go
   orden: "go run ./build/"
 test: internal/validcsv/validcsv_test.go
+CI:
+  - appveyor.yml
+  - .github/workflows/test.yml
