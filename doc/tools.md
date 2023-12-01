@@ -230,3 +230,34 @@ lenguajes. Se integra con plataformas populares como GitHub y Bitbucket,
 permitiendo una configuración sencilla. La ejecución de trabajos en contenedores
 Docker facilita la integración con entornos basados en Docker. Tiene disponible
 un período de prueba tras el cual hay que abonar un importe.
+
+### Decisión para el proyecto
+
+En primer lugar, descarto Jenkins por no ser un servicio en la nube y requerir
+su instalación. Las opciones que solo ofrecen periodos de prueba también las
+descarto, ya que no tengo pensado invertir dinero en este proyecto. Por tanto,
+las únicas opciones disponibles son CircleCI y GitHub Actions. Entre estas dos,
+la opción más recomendable es GitHub Actions, no por tener un número de minutos
+ilimitados, sino porque ya lo estoy usando para construir el contenedor de
+Docker y subirlo a Docker Hub.
+
+Sin embargo, voy a probar ambas opciones.
+
+- He intentado configurar CircleCI, pero cuando iba a crear el workflow he ido a
+  la documentación para ver como podía integrarlo con la API Checks de Github y
+  he visto que no es posible
+  [por algún motivo que no logro entender](https://circleci.com/docs/enable-checks/).
+  Por tanto, descarto CircleCI.
+
+- Github Actions: Con Github Actions no he tenido ningún problema. He creado un
+  workflow que ejecuta los tests en dos versiones de Go, la 1.21 y la 1.20,
+  ambas en una máquina con Ubuntu.
+
+- AppVeyor: esta opción me la recomendó @JJ como alternativa a CircleCI, ya que
+  yo no la había considerado en un primer momento. Ha sido más complicado de
+  configurar que GitHub Actions, al no haber encontrado una documentación tan
+  completa. Sin embargo, he conseguido configurarla y ejecuta los tests para las
+  versiones 1.21 y 1.20 de Go en Windows.
+
+Nota: al final no he usado el contenedor de Docker, ya que este no me permite
+probar las distintas versiones de Go.
