@@ -315,3 +315,42 @@ dependencias externas. Sin embargo, tengo que elegir uno entre los otros tres.
 y **Zerolog** me voy a usar **Zerolog**, ya que ofrece mayor rendimiento, parece
 más fácil de usar y tiene una comunidad más activa. También tiene 95 puntos en
 [Snyk Advisor](https://snyk.io/advisor/golang/github.com/rs/zerolog).
+
+## Herramienta de configuración
+
+### Criterios de elección
+
+- **Seguridad:** Siendo una herramienta que va a distribuir información
+  sensible, es necesario que sea segura.
+
+- **Soporte para configuraciones clave-valor distribuidos:** La herramienta debe
+  permitir el uso de servicios de distribución de configuraciones.
+
+### Opciones a considerar
+
+- [Viper](https://github.com/spf13/viper): Suite completa de gestión de
+  configuraciones para Go. Herramienta muy popular y soporta todo tipo de
+  configuraciones, desde variables de entorno a sistemas de distribución como
+  etcd o Consul.
+
+- [etcd/clientv3](https://pkg.go.dev/go.etcd.io/etcd/client/v3@v3.5.10): Cliente
+  oficial de etcd3 para Go. No hay mucho más que decir salvo que tiene una
+  puntuación de 100/100 en Snyk Advisor. Etcd es el sistema de distribución que
+  se usa en
+  [Kubernetes](https://etcd.io/docs/v3.3/production-users/#all-kubernetes-users).
+
+- [Consul](https://pkg.go.dev/github.com/hashicorp/consul/api): Cliente oficial
+  de Consul para Go. También tiene una puntuación perfecta en Snyk Advisor.
+  Actualmente es propiedad de Hashicorp, la empresa que desarrolla Terraform.
+
+- [Koanf](https://github.com/knadh/koanf): Alternativa a Viper con la ventaja de
+  que funciona por módulos que son independientes entre sí. Esto permite que se
+  puedan importar solo los módulos que se vayan a utilizar sin tener que usar el
+  resto de módulos.
+
+### Decisión para el proyecto
+
+Viendo las opciones que tengo disponibles creo que me voy a decantar por
+**Koanf** al poder trabajar con diferentes módulos de forma independiente. Tiene
+una puntuación más baja en Snyk Advisor, pero no es debido a problemas de
+seguridad, sino a que tiene menos contribuciones y menos uso.
