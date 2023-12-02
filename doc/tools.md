@@ -1,3 +1,14 @@
+# Herramientas
+
+- [Gestor de dependencias](#gestor-de-dependencias)
+- [Gestor de tareas](#gestor-de-tareas)
+- [Comprobación de sintaxis](#comprobaci%C3%B3n-de-sintaxis)
+- [Framework para tests](#framework-para-tests)
+- [Herramienta para ejecutar los tests](#herramienta-para-ejecutar-los-tests)
+- [Imagen de Docker](#imagen-de-docker)
+- [Herramientas de integración continua](#herramientas-de-integraci%C3%B3n-continua)
+- [Herramientas de logs](#herramientas-de-logs)
+
 ## Gestor de dependencias
 
 En Go actualmente no hay mucha discusión sobre el gestor de dependencias a usar.
@@ -251,3 +262,56 @@ Sin embargo, voy a probar ambas opciones.
 
 Nota: al final no he usado el contenedor de Docker, ya que este no me permite
 probar las distintas versiones de Go.
+
+## Herramientas de logs
+
+### Criterios de elección
+
+- **Adaptación a las necesidades del proyecto:** La herramienta que elija debe
+  de adaptarse a las necesidades presentes y futuras del proyecto.
+
+- **Escalabilidad:** En relación con el punto anterior, la herramienta debe ser
+  escalable para poder adaptarse a los cambios que pueda sufrir el proyecto.
+
+- **Facilidad de uso:** La herramienta debe ser fácil de usar, especialmente
+  para el desarrollador.
+
+### Opciones a considerar
+
+Es importante diferenciar entre logs estructurados y no estructurados. Los logs
+estructurados son aquellos que tienen un formato definido, mientras que los logs
+no estructurados no tienen un formato definido. Los logs estructurados se pueden
+almacenar en ficheros con clave-valores como JSON o YAML, mientras que los no
+estructurados se suelen almacenar en ficheros de texto plano.
+
+- [Módulo log de Go](https://pkg.go.dev/log): el módulo log de Go es un módulo
+  de la librería estándar que permite registrar mensajes de log. Para usar logs
+  estructurados hay que usar el módulo [slog](https://pkg.go.dev/log/slog), pero
+  este solo está disponible en la versión 1.21 de Go.
+
+- [Logrus](https://github.com/sirupsen/logrus) es una librería de Go que permite
+  registrar mensajes de log. Es una librería muy popular. Tiene soporte para
+  logs estructurados y permite la creación de hooks para enviar los logs a
+  distintos destinos. Sin embargo, está en modo de mantenimiento, por lo que no
+  recibirá nuevas funcionalidades.
+
+- [Zap](https://pkg.go.dev/go.uber.org/zap): desarrollada por el equipo de Uber,
+  ofrece *blazing fast, structured, level logging in go*. Es una librería muy
+  conocida y una buena opción para obtener logs estructurados.
+
+- [Zerolog](https://github.com/rs/zerolog): inspirada en Zap, es una librería
+  muy popular para logs estructurados. Es una buena alternativa a Zap ya que
+  asegura ofrecer mayor rendimiento.
+
+### Decisión para el proyecto
+
+Todas las opciones ofrecen logs estructurados, que creo que es necesario para
+que el proyecto sea escalable.
+
+Si el módulo **slog** estuviera disponible en la versión 1.20 de Go, lo usaría
+para el proyecto, al ser un módulo de la librería estándar y no requiere
+dependencias externas. Sin embargo, tengo que elegir uno entre los otros tres.
+**Logrus** lo voy a descartar por estar en modo de mantenimiento. Entre **Zap**
+y **Zerolog** me voy a usar **Zerolog**, ya que ofrece mayor rendimiento, parece
+más fácil de usar y tiene una comunidad más activa. También tiene 95 puntos en
+[Snyk Advisor](https://snyk.io/advisor/golang/github.com/rs/zerolog).
