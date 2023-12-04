@@ -3,6 +3,10 @@ package config
 import (
 	"fmt"
 	"log"
+	"os"
+	"strings"
+
+	"github.com/knadh/koanf/providers/env"
 	"github.com/knadh/koanf/providers/posflag"
 	"github.com/knadh/koanf/v2"
 	"github.com/pluque01/CofreSagradoVirtual/internal/projectpath"
@@ -24,6 +28,12 @@ func NewConfig() (*Config, error) {
 	f.Int("etcd_timeout", 5000, "define the timeout for the etcd server")
 
 	f.Parse(os.Args[1:])
+
+	// Load configuration from environment variables. The keys must be prefixed with CSV_ and
+	// use _ as the separator
+	k.Load(env.Provider("CSV_", ".", func(s string) string {
+		return strings.ToLower(strings.TrimPrefix(s, "CSV_"))
+	}), nil)
 
 	// Load configuration from flags, this will override any values set before if passed as flags.
 	// Non set values will get the default values specified in the flags definition.
