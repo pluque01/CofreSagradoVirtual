@@ -6,7 +6,9 @@ import (
 	"os"
 	"strings"
 
+	"github.com/knadh/koanf/parsers/dotenv"
 	"github.com/knadh/koanf/providers/env"
+	"github.com/knadh/koanf/providers/file"
 	"github.com/knadh/koanf/providers/posflag"
 	"github.com/knadh/koanf/v2"
 	"github.com/pluque01/CofreSagradoVirtual/internal/projectpath"
@@ -28,6 +30,16 @@ func NewConfig() (*Config, error) {
 	f.Int("etcd_timeout", 5000, "define the timeout for the etcd server")
 
 	f.Parse(os.Args[1:])
+
+	// Load configuration from .env file
+	// check if .env file exists
+	if _, err := os.Stat(projectpath.Root + "/.env"); os.IsNotExist(err) {
+		fmt.Println(".env file not found")
+	} else {
+		if err := k.Load(file.Provider(projectpath.Root+"/.env"), dotenv.Parser()); err != nil {
+			return nil, fmt.Errorf("failed to load configuration from .env file: %w", err)
+		}
+	}
 
 	// Load configuration from environment variables. The keys must be prefixed with CSV_ and
 	// use _ as the separator
