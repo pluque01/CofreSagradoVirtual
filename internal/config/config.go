@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/knadh/koanf/parsers/dotenv"
 	"github.com/knadh/koanf/providers/env"
@@ -33,11 +34,16 @@ func NewConfig() (*Config, error) {
 	f.Parse(os.Args[1:])
 
 	if isFlagPassed("etcd_endpoint", f) {
+		endpoint, _ := f.GetString("etcd_endpoint")
+		var timeout int
+		if isFlagPassed("etcd_timeout", f) {
+			timeout, _ = f.GetInt("etc_timeout")
+		}
 		// Load configuration from etcd3
 		etcdProvider, err := etcd.Provider(etcd.Config{
-			Endpoints: []string{"http://localhost:2379"},
+			Endpoints: []string{endpoint},
 
-			DialTimeout: 5000,
+			DialTimeout: time.Duration(timeout) * time.Millisecond,
 
 			// Key only readable from env var
 			Key: os.Getenv("CSV_ETCD3_ACCESS_KEY"),
