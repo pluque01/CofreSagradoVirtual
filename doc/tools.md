@@ -312,7 +312,7 @@ Si el módulo **slog** estuviera disponible en la versión 1.20 de Go, lo usarí
 para el proyecto, al ser un módulo de la librería estándar y no requiere
 dependencias externas. Sin embargo, tengo que elegir uno entre los otros tres.
 **Logrus** lo voy a descartar por estar en modo de mantenimiento. Entre **Zap**
-y **Zerolog** me voy a usar **Zerolog**, ya que ofrece mayor rendimiento, parece
+y **Zerolog** voy a usar **Zerolog**, ya que ofrece mayor rendimiento, parece
 más fácil de usar y tiene una comunidad más activa. También tiene 95 puntos en
 [Snyk Advisor](https://snyk.io/advisor/golang/github.com/rs/zerolog).
 
