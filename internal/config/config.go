@@ -8,6 +8,7 @@ import (
 
 	"github.com/knadh/koanf/parsers/dotenv"
 	"github.com/knadh/koanf/providers/env"
+	"github.com/knadh/koanf/providers/etcd/v2"
 	"github.com/knadh/koanf/providers/file"
 	"github.com/knadh/koanf/providers/posflag"
 	"github.com/knadh/koanf/v2"
@@ -30,6 +31,25 @@ func NewConfig() (*Config, error) {
 	f.Int("etcd_timeout", 5000, "define the timeout for the etcd server")
 
 	f.Parse(os.Args[1:])
+
+	if isFlagPassed("etcd_endpoint", f) {
+		// Load configuration from etcd3
+		etcdProvider, err := etcd.Provider(etcd.Config{
+			Endpoints: []string{"http://localhost:2379"},
+
+			DialTimeout: 5000,
+
+			// Key only readable from env var
+			Key: os.Getenv("CSV_ETCD3_ACCESS_KEY"),
+		})
+		if err != nil {
+			return nil, fmt.Errorf("failed to load etcd provider: %w", err)
+		}
+
+		if err := k.Load(etcdProvider, nil); err != nil {
+			fmt.Println("Error loading etcd config")
+		}
+	}
 
 	// Load configuration from .env file
 	// check if .env file exists
@@ -60,4 +80,14 @@ func NewConfig() (*Config, error) {
 	}
 
 	return config, nil
+}
+
+func isFlagPassed(name string, f *flag.FlagSet) bool {
+	found := false
+	f.Visit(func(f *flag.Flag) {
+		if f.Name == name {
+			found = true
+		}
+	})
+	return found
 }
