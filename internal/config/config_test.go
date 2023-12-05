@@ -76,23 +76,23 @@ func TestNewConfig(t *testing.T) {
 	oldArgs := os.Args
 
 	// Set the command-line arguments for testing
-	os.Args = []string{"test", "--log_folder", "/path/to/logsfromflags", "--etcd_endpoint", "http://test.etcd.endpoint:1234"}
+	os.Args = []string{"test", "--log_folder", "/path/to/logsfromflags"}
 
 	// Create a new config
 	config, err = NewConfig()
 	if err != nil {
 		t.Errorf("Error creating config: %v", err)
-	}
-
-	// Check the values of the config
-	if config.LogFolder != "/path/to/logsfromflags" {
-		t.Errorf("Expected LogFolder to be '/path/to/logsfromflags', but got '%s'", config.LogFolder)
-	}
-	if config.EtcdEndpoint != "http://test.etcd.endpoint:1234" {
-		t.Errorf("Expected EtcdEndpoint to be 'http://test.etcd.endpoint:1234', but got '%s'", config.EtcdEndpoint)
-	}
-	if config.EtcdTimeout != 1234 {
-		t.Errorf("Expected EtcdTimeout to be 1234, but got %d", config.EtcdTimeout)
+	} else {
+		// Check the values of the config
+		if config.LogFolder != "/path/to/logsfromflags" {
+			t.Errorf("Expected LogFolder to be '/path/to/logsfromflags', but got '%s'", config.LogFolder)
+		}
+		if config.EtcdEndpoint != "http://test.etcd.endpoint:1234" {
+			t.Errorf("Expected EtcdEndpoint to be 'http://test.etcd.endpoint:1234', but got '%s'", config.EtcdEndpoint)
+		}
+		if config.EtcdTimeout != 1234 {
+			t.Errorf("Expected EtcdTimeout to be 1234, but got %d", config.EtcdTimeout)
+		}
 	}
 
 	// Restore the original command-line arguments
