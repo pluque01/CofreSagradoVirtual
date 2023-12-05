@@ -23,3 +23,6 @@ go.work
 # Config files
 .mdformat.toml
 *.env
+
+# Log files
+*.log
