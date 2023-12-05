@@ -23,6 +23,16 @@ type Config struct {
 	EtcdTimeout  int    `koanf:"etcd_timeout"`
 }
 
+var DefaultConfig *Config
+
+func init() {
+	c, err := NewConfig()
+	if err != nil {
+		log.Fatal(err)
+	}
+	DefaultConfig = c
+}
+
 func NewConfig() (*Config, error) {
 	k := koanf.New(".")
 
