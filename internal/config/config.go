@@ -37,7 +37,7 @@ func NewConfig() (*Config, error) {
 	k := koanf.New(".")
 
 	f := flag.NewFlagSet("config", flag.ContinueOnError)
-	f.String("log_folder", projectpath.Root+"/logs", "define the path for the log folder")
+	f.String("log_folder", projectpath.Root+"/logs/", "define the path for the log folder")
 	f.String("etcd_endpoint", "http://localhost:2379", "define the endpoint for the etcd server")
 	f.Int("etcd_timeout", 5000, "define the timeout for the etcd server")
 
@@ -63,14 +63,14 @@ func NewConfig() (*Config, error) {
 		}
 
 		if err := k.Load(etcdProvider, nil); err != nil {
-			fmt.Println("Error loading etcd config")
+			return nil, fmt.Errorf("failed to load configuration from etcd: %w", err)
 		}
 	}
 
 	// Load configuration from .env file
 	// check if .env file exists
 	if _, err := os.Stat(projectpath.Root + "/.env"); os.IsNotExist(err) {
-		fmt.Println(".env file not found")
+		log.Println("No .env file found")
 	} else {
 		if err := k.Load(file.Provider(projectpath.Root+"/.env"), dotenv.Parser()); err != nil {
 			return nil, fmt.Errorf("failed to load configuration from .env file: %w", err)
@@ -86,7 +86,7 @@ func NewConfig() (*Config, error) {
 	// Load configuration from flags, this will override any values set before if passed as flags.
 	// Non set values will get the default values specified in the flags definition.
 	if err := k.Load(posflag.Provider(f, ".", k), nil); err != nil {
-		log.Fatalf("error loading config: %v", err)
+		return nil, fmt.Errorf("failed to load configuration from flags: %w", err)
 	}
 
 	// Extract configuration from koanf and save into Config struct
