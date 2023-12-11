@@ -270,19 +270,17 @@ probar las distintas versiones de Go.
 - **Adaptación a las necesidades del proyecto:** La herramienta que elija debe
   de adaptarse a las necesidades presentes y futuras del proyecto.
 
-- **Escalabilidad:** En relación con el punto anterior, la herramienta debe ser
-  escalable para poder adaptarse a los cambios que pueda sufrir el proyecto.
+- **Logs estructurados:** La herramienta debe permitir el uso de logs
+  estructurados. Los logs estructurados son aquellos que tienen un formato
+  definido, mientras que los logs no estructurados no tienen un formato
+  definido. Los logs estructurados se pueden almacenar en ficheros con
+  clave-valores como JSON o YAML, mientras que los no estructurados se suelen
+  almacenar en ficheros de texto plano.
 
-- **Facilidad de uso:** La herramienta debe ser fácil de usar, especialmente
-  para el desarrollador.
+- **Seguridad:** La herramienta debe tener una puntuación aceptable en
+  [Snyk Advisor](https://snyk.io/advisor/).
 
 ### Opciones a considerar
-
-Es importante diferenciar entre logs estructurados y no estructurados. Los logs
-estructurados son aquellos que tienen un formato definido, mientras que los logs
-no estructurados no tienen un formato definido. Los logs estructurados se pueden
-almacenar en ficheros con clave-valores como JSON o YAML, mientras que los no
-estructurados se suelen almacenar en ficheros de texto plano.
 
 - [Módulo log de Go](https://pkg.go.dev/log): el módulo log de Go es un módulo
   de la librería estándar que permite registrar mensajes de log. Para usar logs
@@ -312,8 +310,8 @@ Si el módulo **slog** estuviera disponible en la versión 1.20 de Go, lo usarí
 para el proyecto, al ser un módulo de la librería estándar y no requiere
 dependencias externas. Sin embargo, tengo que elegir uno entre los otros tres.
 **Logrus** lo voy a descartar por estar en modo de mantenimiento. Entre **Zap**
-y **Zerolog** voy a usar **Zerolog**, ya que ofrece mayor rendimiento, parece
-más fácil de usar y tiene una comunidad más activa. También tiene 95 puntos en
+y **Zerolog** voy a usar **Zerolog**, ya que ofrece mayor rendimiento y también
+tiene 95 puntos en
 [Snyk Advisor](https://snyk.io/advisor/golang/github.com/rs/zerolog).
 
 ## Herramienta de configuración
