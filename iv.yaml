@@ -7,3 +7,5 @@ test: internal/validcsv/validcsv_test.go
 CI:
   - appveyor.yml
   - .github/workflows/test.yml
+configuracion:
+  - internal/config/config.go

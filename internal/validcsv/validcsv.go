@@ -4,11 +4,11 @@ import (
 	"encoding/csv"
 	"errors"
 	"fmt"
-	"log"
 	"os"
 	"regexp"
 	"sort"
 
+	log "github.com/pluque01/CofreSagradoVirtual/internal/logger"
 	"github.com/pluque01/CofreSagradoVirtual/internal/stringmetrics"
 )
 
@@ -42,7 +42,7 @@ func readFile(filePath string, separator rune) ([][]string, error) {
 	}
 	file, err := os.Open(filePath)
 	if err != nil {
-		log.Fatal("Error while reading file", err)
+		return nil, fmt.Errorf("failed to open file: %w", err)
 	}
 	defer file.Close()
 
@@ -51,7 +51,7 @@ func readFile(filePath string, separator rune) ([][]string, error) {
 
 	records, err := reader.ReadAll()
 	if err != nil {
-		log.Fatal("Error reading records", err)
+		return nil, fmt.Errorf("failed to read records: %w", err)
 	}
 	return records, nil
 }
@@ -70,6 +70,7 @@ func inferTypes(values []string) []string {
 			}
 		}
 		if !found {
+			log.Default.Logger.Debug().Msgf("Unknown type: %s", value)
 			types = append(types, "unknown")
 		}
 	}
@@ -90,7 +91,8 @@ func (c *ClientFile) ValidateFileContent() *[][]string {
 			} else if value != matches[0] {
 				nonMatches, err = getNonMatchingPattern(value, matches[0])
 				if err != nil {
-					log.Println(err)
+					log.Default.Logger.Warn().Msgf("Error getting non-matching pattern: %s", err)
+					return nil
 				}
 			}
 			columnResults = append(columnResults, nonMatches)
@@ -162,10 +164,11 @@ func getNonMatchingPattern(originalStr, matchingStr string) (string, error) {
 }
 
 func NewClientFile(filePath string, separator rune) *ClientFile {
+	log.Default.Logger.Debug().Msgf("Creating new ClientFile from %s", filePath)
 	clientTypes := NewClientTypes()
 	records, err := readFile(filePath, separator)
 	if err != nil {
-		log.Fatal("Error reading file", err)
+		log.Default.Logger.Error().Err(err).Msg("Error reading file")
 	}
 	types := inferTypes(records[0])
 	for i := range records[0] {

@@ -1,3 +1,14 @@
+# Herramientas
+
+- [Gestor de dependencias](#gestor-de-dependencias)
+- [Gestor de tareas](#gestor-de-tareas)
+- [Comprobación de sintaxis](#comprobaci%C3%B3n-de-sintaxis)
+- [Framework para tests](#framework-para-tests)
+- [Herramienta para ejecutar los tests](#herramienta-para-ejecutar-los-tests)
+- [Imagen de Docker](#imagen-de-docker)
+- [Herramientas de integración continua](#herramientas-de-integraci%C3%B3n-continua)
+- [Herramientas de logs](#herramientas-de-logs)
+
 ## Gestor de dependencias
 
 En Go actualmente no hay mucha discusión sobre el gestor de dependencias a usar.
@@ -251,3 +262,94 @@ Sin embargo, voy a probar ambas opciones.
 
 Nota: al final no he usado el contenedor de Docker, ya que este no me permite
 probar las distintas versiones de Go.
+
+## Herramientas de logs
+
+### Criterios de elección
+
+- **Adaptación a las necesidades del proyecto:** La herramienta que elija debe
+  de adaptarse a las necesidades presentes y futuras del proyecto.
+
+- **Logs estructurados:** La herramienta debe permitir el uso de logs
+  estructurados. Los logs estructurados son aquellos que tienen un formato
+  definido, mientras que los logs no estructurados no tienen un formato
+  definido. Los logs estructurados se pueden almacenar en ficheros con
+  clave-valores como JSON o YAML, mientras que los no estructurados se suelen
+  almacenar en ficheros de texto plano.
+
+- **Seguridad:** La herramienta debe tener una puntuación aceptable en
+  [Snyk Advisor](https://snyk.io/advisor/).
+
+### Opciones a considerar
+
+- [Módulo log de Go](https://pkg.go.dev/log): el módulo log de Go es un módulo
+  de la librería estándar que permite registrar mensajes de log. Para usar logs
+  estructurados hay que usar el módulo [slog](https://pkg.go.dev/log/slog), pero
+  este solo está disponible en la versión 1.21 de Go.
+
+- [Logrus](https://github.com/sirupsen/logrus) es una librería de Go que permite
+  registrar mensajes de log. Es una librería muy popular. Tiene soporte para
+  logs estructurados y permite la creación de hooks para enviar los logs a
+  distintos destinos. Sin embargo, está en modo de mantenimiento, por lo que no
+  recibirá nuevas funcionalidades.
+
+- [Zap](https://pkg.go.dev/go.uber.org/zap): desarrollada por el equipo de Uber,
+  ofrece *blazing fast, structured, level logging in go*. Es una librería muy
+  conocida y una buena opción para obtener logs estructurados.
+
+- [Zerolog](https://github.com/rs/zerolog): inspirada en Zap, es una librería
+  muy popular para logs estructurados. Es una buena alternativa a Zap ya que
+  asegura ofrecer mayor rendimiento.
+
+### Decisión para el proyecto
+
+Todas las opciones ofrecen logs estructurados, que creo que es necesario para
+que el proyecto sea escalable.
+
+Si el módulo **slog** estuviera disponible en la versión 1.20 de Go, lo usaría
+para el proyecto, al ser un módulo de la librería estándar y no requiere
+dependencias externas. Sin embargo, tengo que elegir uno entre los otros tres.
+**Logrus** lo voy a descartar por estar en modo de mantenimiento. Entre **Zap**
+y **Zerolog** voy a usar **Zerolog**, ya que ofrece mayor rendimiento y también
+tiene 95 puntos en
+[Snyk Advisor](https://snyk.io/advisor/golang/github.com/rs/zerolog).
+
+## Herramienta de configuración
+
+### Criterios de elección
+
+- **Seguridad:** Siendo una herramienta que va a distribuir información
+  sensible, es necesario que sea segura.
+
+- **Soporte para configuraciones clave-valor distribuidos:** La herramienta debe
+  permitir el uso de servicios de distribución de configuraciones.
+
+### Opciones a considerar
+
+- [Viper](https://github.com/spf13/viper): Suite completa de gestión de
+  configuraciones para Go. Herramienta muy popular y soporta todo tipo de
+  configuraciones, desde variables de entorno a sistemas de distribución como
+  etcd o Consul.
+
+- [etcd/clientv3](https://pkg.go.dev/go.etcd.io/etcd/client/v3@v3.5.10): Cliente
+  oficial de etcd3 para Go. No hay mucho más que decir salvo que tiene una
+  puntuación de 100/100 en Snyk Advisor. Etcd es el sistema de distribución que
+  se usa en
+  [Kubernetes](https://etcd.io/docs/v3.3/production-users/#all-kubernetes-users).
+
+- [Consul](https://pkg.go.dev/github.com/hashicorp/consul/api): Cliente oficial
+  de Consul para Go. También tiene una puntuación perfecta en Snyk Advisor.
+  Actualmente es propiedad de Hashicorp, la empresa que desarrolla Terraform.
+
+- [Koanf](https://github.com/knadh/koanf): Alternativa a Viper con la ventaja de
+  que funciona por módulos que son independientes entre sí. Esto permite que se
+  puedan importar solo los módulos que se vayan a utilizar sin tener que usar el
+  resto de módulos. Al igual que Viper, tiene soporte para sistemas de
+  clave-valor distribuidos como etcd3.
+
+### Decisión para el proyecto
+
+Viendo las opciones que tengo disponibles creo que me voy a decantar por
+**Koanf** al poder trabajar con diferentes módulos de forma independiente. Tiene
+una puntuación más baja en Snyk Advisor, pero no es debido a problemas de
+seguridad, sino a que tiene menos contribuciones y menos uso.
