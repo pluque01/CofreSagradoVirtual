@@ -344,7 +344,8 @@ tiene 95 puntos en
 - [Koanf](https://github.com/knadh/koanf): Alternativa a Viper con la ventaja de
   que funciona por módulos que son independientes entre sí. Esto permite que se
   puedan importar solo los módulos que se vayan a utilizar sin tener que usar el
-  resto de módulos.
+  resto de módulos. Al igual que Viper, tiene soporte para sistemas de
+  clave-valor distribuidos como etcd3.
 
 ### Decisión para el proyecto
 
