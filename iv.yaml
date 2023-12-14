@@ -9,3 +9,5 @@ CI:
   - .github/workflows/test.yml
 configuracion:
   - internal/config/config.go
+framework:
+  - net/http
