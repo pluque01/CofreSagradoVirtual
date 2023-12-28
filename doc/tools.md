@@ -8,6 +8,8 @@
 - [Imagen de Docker](#imagen-de-docker)
 - [Herramientas de integración continua](#herramientas-de-integraci%C3%B3n-continua)
 - [Herramientas de logs](#herramientas-de-logs)
+- [Herramienta de configuración](#herramienta-de-configuraci%C3%B3n)
+- [Framework REST](#framework-rest)
 
 ## Gestor de dependencias
 
@@ -353,3 +355,48 @@ Viendo las opciones que tengo disponibles creo que me voy a decantar por
 **Koanf** al poder trabajar con diferentes módulos de forma independiente. Tiene
 una puntuación más baja en Snyk Advisor, pero no es debido a problemas de
 seguridad, sino a que tiene menos contribuciones y menos uso.
+
+## Framework REST
+
+### Criterios de elección
+
+- **Simplicidad:** La aplicación que estamos desarrollando es relativamente
+  sencilla, por lo que no necesito un framwork muy complejo. Otro de los motivos
+  para elegir un framework simple es el grado de abstracción que conlleva el uso
+  de un framework complejo. En este caso, al ser un proyecto de aprendizaje, es
+  mejor usar un framework simple para entender mejor como se implementan los
+  servidores webs.
+
+- **Seguridad:** Aunque el framework vaya a ser simple, no debe comprometer la
+  seguridad de la aplicación.
+
+### Opciones a considerar
+
+- **[Gin](https://github.com/gin-gonic/gin):** 73 mil estrellas en Github (wow).
+  Ofrece un rendimiento *blazing-fast ©️*, huella de memoria pequeña, un
+  middleware fácil de usar y una documentación extensa. Puntuación de 86 en Snyk
+  Advisor.
+
+- **[Echo](https://github.com/labstack/echo):** Aún más rendimiento que Gin
+  según sus creadores. Framework de middleware extensible, funciones integradas
+  para una variedad de códigos HTTP, certificados TLS automáticos con Let´s
+  Encrypt. Tiene una puntuación de 94 en Snyk Advisor.
+
+- **[Chi](https://github.com/go-chi/chi)**: Framework ligero, rápido y 100%
+  compatible con el módulo `net/http` de Go. Permite el uso de una gran cantidad
+  de middlewares. Está en producción en empresas como Cloudflare o Heroku. Tiene
+  una puntuación de 94 en Snyk Advisor.
+
+- **[Módulo `net/http` de Go](https://pkg.go.dev/net/http):** Módulo de la
+  biblioteca estándar de Go. Es la base sobre la que parten muchos de los
+  módulos mencionados, agregando nuevas funcionalidades. No tiene puntuación en
+  Snyk Advisor, pero se presupone su seguridad al ser un módulo de la biblioteca
+  estándar.
+
+### Decisión para el proyecto
+
+Siguiendo los criterios de elección, voy a descartar Gin y Echo por su alto
+grado de abstracción y su extensa cantidad de funcionalidades. Chi sería una
+opción muy buena si el tamaño del proyecto fuese algo mayor, así que siguiendo
+los criterios y los [proverbios de Go](https://go-proverbs.github.io) ©️, voy a
+utilizar el módulo `net/http` de Go.
