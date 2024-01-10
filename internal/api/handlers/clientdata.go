@@ -69,12 +69,12 @@ func (c *ClientData) handlePostData(rw http.ResponseWriter, r *http.Request) {
 	reader := csv.NewReader(&fileBuffer)
 	delimiter := ','
 	if r.FormValue("delimiter") != "" {
-		if len(r.FormValue("delimiter")) > 1 {
-			http.Error(rw, "Delimiter must be a single character", http.StatusBadRequest)
-			return
+		d, err := strconv.Atoi(r.FormValue("delimiter"))
+		if err != nil {
+			http.Error(rw, "Error converting delimiter to rune", http.StatusBadRequest)
 		}
-		if validcsv.IsValidSeparator([]rune(r.FormValue("delimiter"))[0]) {
-			delimiter = []rune(r.FormValue("delimiter"))[0]
+		if validcsv.IsValidSeparator(rune(d)) {
+			delimiter = rune(d)
 		}
 	}
 	reader.Comma = delimiter
