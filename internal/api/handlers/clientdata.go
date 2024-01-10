@@ -3,10 +3,14 @@ package handlers
 import (
 	"bytes"
 	"encoding/csv"
+	"encoding/json"
+	"fmt"
 	"io"
 	"log"
 	"net/http"
 	"regexp"
+	"strconv"
+
 	"github.com/pluque01/CofreSagradoVirtual/internal/api/utils"
 	"github.com/pluque01/CofreSagradoVirtual/internal/logger"
 	"github.com/pluque01/CofreSagradoVirtual/internal/validcsv"
@@ -33,8 +37,10 @@ func (c *ClientData) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 		c.handlePostData(rw, r)
 		return
 	case r.Method == http.MethodGet && getDataRowsRe.MatchString(r.URL.Path):
+		c.handleGetRows(rw, r)
 		return
 	case r.Method == http.MethodGet && getDataRowRe.MatchString(r.URL.Path):
+		c.handleGetRow(rw, r)
 		return
 	default:
 		http.Error(rw, "Method not allowed", http.StatusMethodNotAllowed)
@@ -92,9 +98,31 @@ func (c *ClientData) handlePostData(rw http.ResponseWriter, r *http.Request) {
 	rw.WriteHeader(http.StatusOK)
 	fmt.Fprintf(rw, "%s", md5Hash)
 }
-		return
-	case h.Method == http.MethodGet && getDataRowRe.MatchString(h.URL.Path):
-		// define logic for GET /clientdata/hash/row
+
+func (c *ClientData) handleGetRows(rw http.ResponseWriter, r *http.Request) {
+	hash := getDataRowsRe.FindStringSubmatch(r.URL.Path)[1]
+	rows, err := validcsv.GetClientFileRows(hash)
+	if err != nil {
+		http.Error(rw, fmt.Sprintf("Error getting the number of rows: %s", err), http.StatusNotFound)
 		return
 	}
+	rw.WriteHeader(http.StatusOK)
+	fmt.Fprintf(rw, "%d", rows)
+}
+
+func (c *ClientData) handleGetRow(rw http.ResponseWriter, r *http.Request) {
+	hash := getDataRowRe.FindStringSubmatch(r.URL.Path)[1]
+	row := getDataRowRe.FindStringSubmatch(r.URL.Path)[2]
+	convertedRow, err := strconv.Atoi(row)
+	if err != nil {
+		http.Error(rw, fmt.Sprintf("Error converting row to int: %s", err), http.StatusBadRequest)
+		return
+	}
+	rowValidated, err := validcsv.GetValidatedRow(hash, convertedRow)
+	if err != nil {
+		http.Error(rw, fmt.Sprintf("Error getting the row: %s", err), http.StatusNotFound)
+		return
+	}
+	json.NewEncoder(rw).Encode(rowValidated)
+	rw.WriteHeader(http.StatusOK)
 }

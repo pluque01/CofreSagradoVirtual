@@ -18,3 +18,19 @@ func GetClientFile(hash string) (ClientFile, error) {
 	}
 	return clientFiles[hash], nil
 }
+
+func GetClientFileRows(hash string) (int, error) {
+	cf, err := GetClientFile(hash)
+	if err != nil {
+		return 0, err
+	}
+	return cf.GetNumberOfRows(), nil
+}
+
+func GetValidatedRow(hash string, row int) ([]string, error) {
+	cf, err := GetClientFile(hash)
+	if err != nil {
+		return []string{}, err
+	}
+	return *cf.ValidateRow(row), nil
+}

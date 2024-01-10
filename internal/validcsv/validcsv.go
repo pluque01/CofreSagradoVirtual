@@ -184,3 +184,7 @@ func (c *ClientFile) Print() {
 		fmt.Println()
 	}
 }
+
+func (c ClientFile) GetNumberOfRows() int {
+	return len(c.fileContent)
+}
