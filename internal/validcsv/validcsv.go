@@ -4,7 +4,7 @@ import (
 	"encoding/csv"
 	"errors"
 	"fmt"
-	"os"
+	"io"
 	"regexp"
 	"sort"
 
@@ -36,16 +36,14 @@ func NewClientTypes() *ClientTypes {
 	return &ClientTypes{types: map[int]regexp.Regexp{}}
 }
 
-func readFile(filePath string, separator rune) ([][]string, error) {
-	if separator == '\r' || separator == '\n' || separator == '\uFFFD' {
+func IsValidSeparator(separator rune) bool {
+	return separator != '\r' && separator != '\n' && separator != '\uFFFD'
+}
+
+func readFile(file io.Reader, separator rune) ([][]string, error) {
+	if !IsValidSeparator(separator) {
 		return nil, errors.New("invalid separator")
 	}
-	file, err := os.Open(filePath)
-	if err != nil {
-		return nil, fmt.Errorf("failed to open file: %w", err)
-	}
-	defer file.Close()
-
 	reader := csv.NewReader(file)
 	reader.Comma = separator
 
@@ -79,27 +77,33 @@ func inferTypes(values []string) []string {
 
 func (c *ClientFile) ValidateFileContent() *[][]string {
 	results := [][]string{}
-	for _, records := range c.fileContent {
-		columnResults := []string{}
-		for i, value := range records {
-			var nonMatches string
-			var err error
-			pattern := c.fileTypes.types[i]
-			matches := pattern.FindStringSubmatch(value)
-			if len(matches) == 0 {
-				nonMatches = value
-			} else if value != matches[0] {
-				nonMatches, err = getNonMatchingPattern(value, matches[0])
-				if err != nil {
-					log.Default.Logger.Warn().Msgf("Error getting non-matching pattern: %s", err)
-					return nil
-				}
-			}
-			columnResults = append(columnResults, nonMatches)
-		}
-		results = append(results, columnResults)
+	for i := range c.fileContent {
+		results = append(results, *c.ValidateRow(i))
 	}
 	return &results
+}
+
+func (c ClientFile) ValidateRow(row int) *[]string {
+	records := c.fileContent[row]
+	recordsValidated := []string{}
+	// Iterate over each value of the row
+	for i, value := range records {
+		var nonMatches string
+		var err error
+		pattern := c.fileTypes.types[i]
+		matches := pattern.FindStringSubmatch(value)
+		if len(matches) == 0 {
+			nonMatches = value
+		} else if value != matches[0] {
+			nonMatches, err = getNonMatchingPattern(value, matches[0])
+			if err != nil {
+				log.Default.Logger.Warn().Msgf("Error getting non-matching pattern: %s", err)
+				return nil
+			}
+		}
+		recordsValidated = append(recordsValidated, nonMatches)
+	}
+	return &recordsValidated
 }
 
 func RecommendStrings(name string, names *[]string) ([]string, error) {
@@ -163,13 +167,8 @@ func getNonMatchingPattern(originalStr, matchingStr string) (string, error) {
 	return nonMatchingPart, nil
 }
 
-func NewClientFile(filePath string, separator rune) *ClientFile {
-	log.Default.Logger.Debug().Msgf("Creating new ClientFile from %s", filePath)
+func NewClientFile(records [][]string) *ClientFile {
 	clientTypes := NewClientTypes()
-	records, err := readFile(filePath, separator)
-	if err != nil {
-		log.Default.Logger.Error().Err(err).Msg("Error reading file")
-	}
 	types := inferTypes(records[0])
 	for i := range records[0] {
 		clientTypes.types[i] = knownDataTypes[types[i]].TypeRegex
