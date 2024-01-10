@@ -1,19 +1,13 @@
 package main
 
 import (
-	"fmt"
+	"net/http"
 
-	"github.com/pluque01/CofreSagradoVirtual/internal/config"
+	"github.com/pluque01/CofreSagradoVirtual/internal/api"
 	log "github.com/pluque01/CofreSagradoVirtual/internal/logger"
-	"github.com/pluque01/CofreSagradoVirtual/internal/validcsv"
 )
 
 func main() {
-	clientFile := validcsv.NewClientFile("test/data/validate_file_content.csv", ';')
-	clientFile.Print()
-	results := clientFile.ValidateFileContent()
-	fmt.Println(results)
-
-	fmt.Println(config.DefaultConfig)
+	http.ListenAndServe(":8080", api.GetServeMux())
 	log.Close()
 }
