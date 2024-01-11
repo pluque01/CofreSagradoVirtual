@@ -64,7 +64,7 @@ func (c *ClientData) handlePostData(rw http.ResponseWriter, r *http.Request) {
 	// Read the content of the file into a buffer
 	var fileBuffer bytes.Buffer
 	if _, err := io.Copy(&fileBuffer, file); err != nil {
-		http.Error(rw, "Error reading the file", http.StatusInternalServerError)
+		http.Error(rw, "Error reading the file", http.StatusBadRequest)
 		return
 	}
 
