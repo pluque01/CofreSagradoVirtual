@@ -16,6 +16,8 @@ import (
 	"github.com/pluque01/CofreSagradoVirtual/internal/validcsv"
 )
 
+var handlersLog = logger.Default.Logger
+
 type ClientData struct {
 	l *log.Logger
 }
@@ -31,7 +33,7 @@ var (
 )
 
 func (c *ClientData) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
-	logger.Default.Logger.Info().Msgf("Request received: %s %s", r.Method, r.URL.Path)
+	handlersLog.Info().Msgf("Request received: %s %s", r.Method, r.URL.Path)
 	switch {
 	case r.Method == http.MethodPost && postDataRe.MatchString(r.URL.Path):
 		c.handlePostData(rw, r)
@@ -93,7 +95,7 @@ func (c *ClientData) handlePostData(rw http.ResponseWriter, r *http.Request) {
 	clientfile := validcsv.NewClientFile(records)
 	validcsv.SaveClientFile(md5Hash, clientfile)
 
-	logger.Default.Logger.Info().Msgf("Saved file with hash: %s", md5Hash)
+	handlersLog.Info().Msgf("Saved file with hash: %s", md5Hash)
 
 	rw.WriteHeader(http.StatusOK)
 	fmt.Fprintf(rw, "%s", md5Hash)
