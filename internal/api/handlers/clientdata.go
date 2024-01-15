@@ -54,9 +54,9 @@ func (c *ClientData) handlePostData(rw http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	file, _, err := r.FormFile("file")
+	file, fileHeader, err := r.FormFile("file")
 	if err != nil {
-		http.Error(rw, "Error retrieving the file", http.StatusBadRequest)
+		http.Error(rw, fmt.Sprintf("Error retrieving the file %s", fileHeader.Filename), http.StatusBadRequest)
 		return
 	}
 	defer file.Close()
@@ -64,7 +64,7 @@ func (c *ClientData) handlePostData(rw http.ResponseWriter, r *http.Request) {
 	// Read the content of the file into a buffer
 	var fileBuffer bytes.Buffer
 	if _, err := io.Copy(&fileBuffer, file); err != nil {
-		http.Error(rw, "Error reading the file", http.StatusBadRequest)
+		http.Error(rw, fmt.Sprintf("Error reading the file %s", fileHeader.Filename), http.StatusBadRequest)
 		return
 	}
 
