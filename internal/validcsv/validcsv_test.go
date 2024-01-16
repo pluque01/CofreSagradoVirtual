@@ -1,6 +1,7 @@
 package validcsv
 
 import (
+	"os"
 	"reflect"
 	"regexp"
 	"testing"
@@ -24,7 +25,10 @@ var readFileTests = []struct {
 func TestReadFile(t *testing.T) {
 	for _, tt := range readFileTests {
 		t.Run(tt.filePath, func(t *testing.T) {
-			ans, err := readFile(tt.filePath, tt.separator)
+			// Open the file and read it
+			csvFile, _ := os.Open(tt.filePath)
+			ans, err := readFile(csvFile, tt.separator)
+			defer csvFile.Close()
 			if tt.expectedErr != "" && err == nil {
 				t.Errorf("got %v, want %v", err, tt.expectedErr)
 			} else if tt.expectedErr == "" && err != nil {

@@ -67,3 +67,11 @@ También se puede usar la imagen de
 ```bash
 docker run -t -v `pwd`:/app/test fallenmeteor/cofresagradovirtual:latest
 ```
+
+## Compilación de la aplicación
+
+Para compilar la aplicación, se debe ejecutar el siguiente comando:
+
+```bash
+go run ./build/ build
+```
