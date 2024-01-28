@@ -1,6 +1,7 @@
 ---
 theme: apple-basic
 background: none
+download: true
 highlighter: shikiji
 lineNumbers: false
 info: |
