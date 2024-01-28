@@ -1,0 +1,22 @@
+{
+  "name": "iv-defensa",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "slidev build",
+    "dev": "slidev --open",
+    "export": "slidev export"
+  },
+  "dependencies": {
+    "@slidev/cli": "^0.46.3",
+    "@slidev/theme-apple-basic": "^0.20.0",
+    "@slidev/theme-default": "latest",
+    "@slidev/theme-seriph": "latest",
+    "slidev-theme-academic": "^1.2.0"
+  },
+  "devDependencies": {
+    "@iconify-json/logos": "^1.1.42",
+    "@iconify-json/material-symbols": "^1.1.71",
+    "@iconify-json/uim": "^1.1.9"
+  }
+}

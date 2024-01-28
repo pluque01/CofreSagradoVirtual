@@ -26,3 +26,5 @@ go.work
 
 # Log files
 *.log
+
+**/node_modules
