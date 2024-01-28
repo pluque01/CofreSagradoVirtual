@@ -45,7 +45,7 @@ Planteamiento del problema
 
 ---
 layout: image-right
-image: images/street_map.png
+image: /street_map.png
 hideInToc: true
 transition: slide-up
 ---
@@ -62,7 +62,7 @@ Problemas: falta de datos, necesidad de usar la api de google maps, scope demasi
 
 ---
 layout: image-right
-image: images/csvfile.png
+image: /csvfile.png
 hideInToc: true
 ---
 
